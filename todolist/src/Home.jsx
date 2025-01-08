@@ -8,29 +8,19 @@ import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri"
 function Home() {
     const [todos, setTodos] = useState([])
     useEffect(() => {
-        axios.get("http://localhost:3001/get")
+        axios.get("https://to-do-app-react-node.vercel.app/get")
             .then(result => setTodos(result.data))
             .catch(err => console.log(err))
     })
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get(`https://to-do-app-react-node.vercel.app/`);
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-
     const handleEdit = (id) => {
-        axios.put("http://localhost:3001/update/" + id)
+        axios.put("https://to-do-app-react-node.vercel.app/update/" + id)
             .then(result => console.log(result))
             .catch(err => console.log(err))
     }
 
     const handleDelete = (id) => {
-        axios.delete("http://localhost:3001/delete/" + id)
+        axios.delete("https://to-do-app-react-node.vercel.app/delete/" + id)
             .then(result => console.log(result))
             .catch(err => console.log(err))
     }
