@@ -19,7 +19,7 @@ app.use(express.json())
 mongoose.connect(mongodb)
 
 app.get("/", (req, res) => {
-    res.send("Hello, Welcome to create your first mern stack project.")
+    res.json("Hello, Welcome to create your first mern stack project.")
 })
 
 app.get("/get", (req, res) => {
