@@ -13,6 +13,16 @@ function Home() {
             .catch(err => console.log(err))
     })
 
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`https://to-do-app-react-node.vercel.app/`);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
     const handleEdit = (id) => {
         axios.put("http://localhost:3001/update/" + id)
             .then(result => console.log(result))

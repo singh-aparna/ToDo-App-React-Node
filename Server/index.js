@@ -3,10 +3,14 @@ const app = express()
 const mongoose = require("mongoose")
 const cors = require("cors")
 const TodoModel = require('./Models/Todo')
+require('dotenv').config();
+
+const mongodbLocal = process.env.mongodbLocalURL 
+mongodb = process.env.mongodbURL;
 
 app.use(cors())
 app.use(express.json())
-mongoose.connect("mongodb://localhost:27017/test")
+mongoose.connect(mongodb)
 
 app.get("/", (req, res) => {
     res.send("Hello, Welcome to create your first mern stack project.")
