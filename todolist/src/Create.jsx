@@ -4,7 +4,7 @@ import axios from 'axios';
 function Create() {
     const [task, setTask] = useState()
     const handleAdd = () => {
-        axios.post('http://localhost:3001/add', { task: task })
+        axios.post('https://to-do-app-react-node.vercel.app/add', { task: task })
             .then(result => console.log(result))
             .catch(err => console.log(err))
     }
@@ -15,5 +15,5 @@ function Create() {
         </div>
     )
 }
-
+// http://localhost:3001/add
 export default Create
