@@ -18,6 +18,11 @@ app.use(cors(
 app.use(express.json())
 mongoose.connect(mongodb)
 
+export default (req, res) => {
+  res.status(200).json({ message: "Hello from Vercel!" });
+};
+
+
 app.get("/", (req, res) => {
     res.send("Hello, Welcome to create your first mern stack project.")
 })
