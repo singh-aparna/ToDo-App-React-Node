@@ -10,7 +10,7 @@ mongodb = process.env.mongodbURL;
 
 app.use(cors(
     {
-        origin: ["https://to-do-app-react-node-uclf.vercel.app/"],
+        origin: ["https://to-do-app-react-node-uclf.vercel.app"],
         methods: ["POST","GET"],
         credentials: true
     }
