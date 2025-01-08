@@ -8,7 +8,13 @@ require('dotenv').config();
 const mongodbLocal = process.env.mongodbLocalURL 
 mongodb = process.env.mongodbURL;
 
-app.use(cors())
+app.use(cors(
+    {
+        origin: [""],
+        methods: ["POST","GET"],
+        credentials: true
+    }
+))
 app.use(express.json())
 mongoose.connect(mongodb)
 
