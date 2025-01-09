@@ -33,7 +33,7 @@ function Home() {
             <div className='border p-1 rounded-md'>
                 {
                     todos.length === 0 ?
-                        <h2>No Record</h2> :
+                        <h2 className='text-[#151a87]'>No Record</h2> :
                         todos.map(todo => (
                             <div className='text-[#151a87] border p-1 rounded-md flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
