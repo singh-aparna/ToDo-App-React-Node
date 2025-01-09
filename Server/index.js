@@ -5,7 +5,7 @@ const cors = require("cors")
 const TodoModel = require('./Models/Todo')
 require('dotenv').config();
 
-const mongodbLocal = process.env.mongodbLocalURL 
+const mongodbLocal = process.env.mongodbLocalURL
 mongodb = process.env.mongodbURL;
 
 app.use(cors(

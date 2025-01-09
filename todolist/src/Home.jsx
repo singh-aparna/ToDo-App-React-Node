@@ -26,16 +26,16 @@ function Home() {
     }
     return (
 
-        <div className='flex flex-col gap-y-4 border rounded-lg items-center bg-white p-5'>
-            <h2 className='font-bold text-2xl'>To-Do List</h2>
-            <h2 className='leading-10 font-semibold'>My tasks</h2>
+        <div className='flex flex-col gap-y-4 border rounded-xl h-full items-center bg-[#e5e5e5] p-5'>
+            <h2 className='font-bold text-3xl text-[#151a87]'>To-Do List</h2>
+            <h2 className='leading-10 text-xl font-semibold text-[#151a87] '>My tasks</h2>
             <Create />
             <div className='border p-1 rounded-md'>
                 {
                     todos.length === 0 ?
                         <h2>No Record</h2> :
                         todos.map(todo => (
-                            <div className='border p-1 rounded-md flex items-center justify-between gap-x-7'>
+                            <div className='text-[#151a87] border p-1 rounded-md flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
                                     {todo.done ? <RiCheckboxCircleFill /> : <RiCheckboxBlankCircleLine />}
 
