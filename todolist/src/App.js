@@ -5,7 +5,7 @@ import Home from "./Home";
 
 function App() {
   return (
-    <div className="px-64 py-10 bg-[#99aaff] h-screen">
+    <div className="px-8 md:px-64 py-10 bg-[#99aaff] h-screen">
       <Home />
     </div>
   );
