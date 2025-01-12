@@ -26,8 +26,8 @@ function Home() {
     }
     return (
 
-        <div className='flex flex-col gap-y-4 border rounded-xl h-full items-center bg-[#e5e5e5] p-5'>
-            <h2 className='font-bold text-3xl text-[#151a87]'>To-Do List</h2>
+        <div className='flex flex-col gap-y-4 border rounded-xl h-full items-center bg-[#e5e5e5] p-5 absolute inset-0 bg-white/0 backdrop-blur-sm'>
+            <h2 className='font-semibold text-3xl text-[#151a87]'>To-Do List</h2>
             <h2 className='leading-10 text-xl font-semibold text-[#151a87] '>My tasks</h2>
             <Create />
             <div className='border p-1 rounded-md'>

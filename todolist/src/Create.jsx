@@ -16,9 +16,9 @@ function Create() {
         }
     }
     return (
-        <div className='flex gap-x-2'>
-            <input className='border rounded-3xl p-1 focus:outline-none caret-pink-100' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
-            <button className='border rounded-lg bg-[#dff994] p-1' onClick={handleAdd}>Add Task</button>
+        <div className='flex gap-x-2 '>
+            <input className='md:px-3 md:py-1 px-2 py-2 border rounded-lg font-semibold text-sm  focus:outline-none caret-pink-100' placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
+            <button className='md:px-3 md:py-1 px-2 py-2 border rounded-lg text-white font-bold text-sm bg-[#c77b00]' onClick={handleAdd}>Add Task</button>
         </div>
     )
 }
