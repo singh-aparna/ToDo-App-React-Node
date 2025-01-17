@@ -7,7 +7,7 @@
 
 ## **Key Features**
 ✅ Add a new task  
-✅ Update an existing task  
+✅ Select or marked an existing completed task  
 ✅ Delete tasks you’ve completed or no longer need  
 
 This project helped me dive deeper into full-stack development and understand the power of seamless integration between frontend and backend technologies.
