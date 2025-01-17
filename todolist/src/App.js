@@ -1,7 +1,4 @@
-// import logo from './logo.svg';
-// import './App.css';
 import "./Image/bgcover.jpg"
-
 import Home from "./Home";
 
 function App() {

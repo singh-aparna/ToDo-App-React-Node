@@ -5,7 +5,7 @@ import { FaTrash } from "react-icons/fa6";
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri";
 
 
-function Home() {
+export default function Home() {
     const [todos, setTodos] = useState([])
     useEffect(() => {
         axios.get("https://to-do-app-react-node.vercel.app/get")
@@ -48,5 +48,3 @@ function Home() {
         </div>
     )
 }
-
-export default Home

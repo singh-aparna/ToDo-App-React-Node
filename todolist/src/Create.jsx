@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 
-function Create() {
+export default function Create() {
     const [task, setTask] = useState("")
     const handleAdd = () => {
         if (task.trim() !== "") {
@@ -23,6 +23,5 @@ function Create() {
     )
 }
 // http://localhost:3001/add
-export default Create
 // https://to-do-app-react-node-uclf.vercel.app/ - Frontend
 // https://to-do-app-react-node.vercel.app/ - Backend
