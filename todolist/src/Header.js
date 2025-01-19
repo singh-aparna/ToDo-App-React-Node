@@ -10,7 +10,8 @@ export default function Header() {
     // const [redirect, setRedirect] = useState(false);//addbyme
 
     useEffect(() => {
-        fetch('http://localhost:3001/profile', {
+        // fetch('https://localhost:3001/profile', {//local
+        fetch('https://to-do-app-react-node.vercel.app/profile', {//server
             credentials: 'include',
         }).then(response => {
             response.json().then(userInfo => {
@@ -19,7 +20,8 @@ export default function Header() {
         })
     }, [])
     function logout() {
-        fetch('http://localhost:3001/logout', {
+        // fetch('https://localhost:3001/logout', {//local
+        fetch('https://to-do-app-react-node.vercel.app/logout', {//server
             credentials: 'include',
             method: "POST",
         })
