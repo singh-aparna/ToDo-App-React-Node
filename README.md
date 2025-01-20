@@ -19,8 +19,8 @@ This project helped me dive deeper into full-stack development and understand th
 -  Deploying and testing a full-stack application  
 
 ## **Updates**
-✅ Users can now register, log in & log out, and securely interact with tasks. 
-✅ However, currently, users can view and manage tasks added by all users, not just their own. 
+✅ Users can now register, log in & log out, and securely interact with tasks.   
+✅ However, currently, users can view and manage tasks added by all users, not just their own.   
 
 ## **Upcoming updates**
 ✅ Users will be able to view and manage only their personal tasks—making the app even more tailored and secure for each individual user.
