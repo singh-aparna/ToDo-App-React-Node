@@ -13,10 +13,10 @@
 This project helped me dive deeper into full-stack development and understand the power of seamless integration between frontend and backend technologies.
 
 ## **What I Learned**
--  Building RESTful APIs with Node.js and Express  
--  Connecting to a cloud database using MongoDB Atlas  
--  Managing state and making HTTP requests using React and Axios  
--  Deploying and testing a full-stack application
+-  Building RESTful APIs with Node.js and Express    
+-  Connecting to a cloud database using MongoDB Atlas    
+-  Managing state and making HTTP requests using React and Axios    
+-  Deploying and testing a full-stack application  
 
 ## **Updates**
 ✅ Users can now register, log in & log out, and securely interact with tasks. 
