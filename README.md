@@ -26,12 +26,12 @@ This project helped me dive deeper into full-stack development and understand th
 ✅ Users will be able to view and manage only their personal tasks—making the app even more tailored and secure for each individual user.  
 
 ## **What I Learned**
-✅ JWT Authentication: Secure user login and token management.  
-✅ Cookies: Storing and sending authentication tokens securely.  
-✅ CORS Errors: Resolved cross-origin issues to ensure smooth API calls between frontend and backend.  
-✅ Backend Security: Added robust error handling and improved session management.  
-✅ Express & MongoDB: Leveraged Express for server management and MongoDB for efficient data storage.  
-✅ bcrypt: Implemented password hashing using bcrypt for securely storing passwords. Learned how to generate salts and hash passwords to protect user credentials from being compromised.
+✅ **JWT Authentication**: Secure user login and token management.  
+✅ **Cookies**: Storing and sending authentication tokens securely.  
+✅ **CORS Errors**: Resolved cross-origin issues to ensure smooth API calls between frontend and backend.  
+✅ **Backend Security**: Added robust error handling and improved session management.  
+✅ **Express & MongoDB**: Leveraged Express for server management and MongoDB for efficient data storage.  
+✅ **bcrypt**: Implemented password hashing using bcrypt for securely storing passwords. Learned how to generate salts and hash passwords to protect user credentials from being compromised.
 
 ## **Key Takeaways**
 
