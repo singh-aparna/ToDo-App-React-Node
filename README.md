@@ -1,6 +1,6 @@
 # To-Do App built using the MERN stack! 🌟
 
-## **Tech Stack**
+🛠  ## **Tech Stack**
 - **Frontend**: React (with Axios for API calls)
 - **Backend**: Node.js & Express.js
 - **Database**: MongoDB & MongoDB Atlas for cloud storage
