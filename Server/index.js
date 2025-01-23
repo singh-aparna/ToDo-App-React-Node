@@ -21,11 +21,11 @@ app.use(cors(
     {
         origin: "https://to-do-app-react-node-uclf.vercel",//server
         methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
-        Headers: Content-Type, Authorization,
-        //origin: 'http://localhost:3000',//local
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
     }//Server
 ))
+//origin: 'http://localhost:3000',//local
 app.options('*', cors());// Handle preflight requests
 app.use(express.json());
 app.use(cookieParser());
