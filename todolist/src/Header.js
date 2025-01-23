@@ -20,7 +20,7 @@ export default function Header() {
     }, [])
     function logout() {
         //fetch('http://localhost:3001/logout', {//local
-         fetch('http://to-do-app-react-node.vercel.app/logout', {//server
+         fetch('https://to-do-app-react-node.vercel.app/logout', {//server
             credentials: 'include',
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
