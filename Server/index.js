@@ -113,8 +113,8 @@ app.get("/get", async (req, res) => {
         res.json(todo);
     //}
     //catch (err) {
-        console.error("JWT Verification Error:", err);
-        res.status(401).json({ message: "Unauthorized: Invalid or missing token" })
+        //console.error("JWT Verification Error:", err);
+        //res.status(401).json({ message: "Unauthorized: Invalid or missing token" })
     //}
 })
 
