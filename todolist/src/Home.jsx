@@ -22,7 +22,7 @@ export default function Home() {
             // axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
             axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }, { withCredentials: true }) //Server
                 .then(response => {
-                    setTodos(response.data);
+                    setTodos([...todos, response.data]);
                     setTask('');
                 })
                 .catch(err => console.log(err));
