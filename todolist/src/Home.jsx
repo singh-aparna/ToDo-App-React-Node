@@ -35,7 +35,7 @@ export default function Home() {
     }
     const handleEdit = (id) => {
         //axios.put("https://to-do-app-react-node.vercel/update/" + id, { withCredentials: true })//server
-            axios.put("http://localhost:3001/update/" + id, { withCredentials: true })//local
+            axios.put("https://localhost:3001/update/" + id, { withCredentials: true })//local
             .then(() => {
                 setTodos((prevTodos) =>
                     prevTodos.map((todo) =>
