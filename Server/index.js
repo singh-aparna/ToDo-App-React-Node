@@ -107,15 +107,15 @@ app.post('/add', (req, res) => {
 })
 
 app.get("/get", async (req, res) => {
-    try {
+    //try {
         const payload = jwt.verify(req.cookies.token, secret)/////////
         const todo = await TodoModel.find({ user: payload.id })///////
         res.json(todo);
-    }
-    catch (err) {
+    //}
+    //catch (err) {
         console.error("JWT Verification Error:", err);
         res.status(401).json({ message: "Unauthorized: Invalid or missing token" })
-    }
+    //}
 })
 
 app.put("/update/:id", (req, res) => {
