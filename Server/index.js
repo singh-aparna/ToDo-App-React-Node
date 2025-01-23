@@ -15,11 +15,16 @@ const PORT = process.env.PORT || 3001;
 
 const mongodbLocal = process.env.mongodbLocalURL
 const mongodb = process.env.mongodbURL;
+const allowedOrigins = [
+    'http://localhost:3000', // Local frontend
+    'https://to-do-app-react-node-uclf.vercel.app', // Production frontend
+];
+
 
 const cors = require("cors");
 app.use(cors(
     {
-        origin: ["https://to-do-app-react-node-uclf.vercel.app"],//server
+        origin: "https://to-do-app-react-node-uclf.vercel.app",//server
         methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
