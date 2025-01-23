@@ -20,7 +20,8 @@ const cors = require("cors");
 app.use(cors(
     {
          origin: ["https://to-do-app-react-node-uclf.vercel"],//server
-        methods: ["POST", "GET", "PUT", "DELETE"],
+        methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+        Headers: Content-Type, Authorization,
         //origin: 'http://localhost:3000',//local
         credentials: true
     }//Server
