@@ -25,7 +25,7 @@ app.use(cors(
         credentials: true
     }//Server
 ))
-
+app.options('*', cors());// Handle preflight requests
 app.use(express.json());
 app.use(cookieParser());
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })//local//server
