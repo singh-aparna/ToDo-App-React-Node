@@ -61,13 +61,10 @@ export default function Home() {
             <h1>My Tasks</h1>
             {/* <Create /> */}
 
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                handleAdd(e)
-            }}>
+            <div>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
-                <button>Add Task</button>
-            </form>
+                <button onClick={handleAdd}>Add Task</button>
+            </div>
 
             <div className='record'>
                 {
