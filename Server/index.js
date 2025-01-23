@@ -24,10 +24,10 @@ const allowedOrigins = [
 const cors = require("cors");
 app.use(cors(
     {
-        origin: "https://to-do-app-react-node-uclf.vercel.app",//server
+        origin: 'https://to-do-app-react-node-uclf.vercel.app',//server
         methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization'],              
     }//Server
 ))
 //origin: 'http://localhost:3000',//local
@@ -112,15 +112,15 @@ app.post('/add', (req, res) => {
 })
 
 app.get("/get", async (req, res) => {
-    //try {
+    try {
         const payload = jwt.verify(req.cookies.token, secret)/////////
         const todo = await TodoModel.find({ user: payload.id })///////
         res.json(todo);
-    //}
-    //catch (err) {
-        //console.error("JWT Verification Error:", err);
-        //res.status(401).json({ message: "Unauthorized: Invalid or missing token" })
-    //}
+    }
+    catch (err) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
 })
 
 app.put("/update/:id", (req, res) => {
