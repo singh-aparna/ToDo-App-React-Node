@@ -90,13 +90,13 @@ app.get('/profile', (req, res) => {
 
 app.post('/add', (req, res) => {
     const payload = jwt.verify(req.cookies.token, secret);//////////////
-    const task = req.body.task;
+    //const task = req.body.task;
     // const todo= TodoModel.create({
     //     task: task,
     //     user: new mongoose.Types.ObjectId(payload.id)///////////
     // });
     const todo = new TodoModel({
-        task: task,
+        task: req.body.task,
         user: new mongoose.Types.ObjectId(payload.id),
     })
     todo.save().then(todo => { res.json(todo); })
@@ -107,7 +107,7 @@ app.post('/add', (req, res) => {
 app.get("/get", async (req, res) => {
     try {
         const payload = jwt.verify(req.cookies.token, secret)/////////
-        const todo = await TodoModel.find({ user: new mongoose.Types.ObjectId(payload.id) })///////
+        const todo = await TodoModel.find({ user: payload.id })///////
         res.json(todo);
     }
     catch (err) {
