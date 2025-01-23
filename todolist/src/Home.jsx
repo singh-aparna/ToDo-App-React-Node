@@ -12,8 +12,9 @@ export default function Home() {
     useEffect(() => {
         axios.get("http://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
             // axios.get("http://localhost:3001/get", { withCredentials: true })//local
-            .then(response => setTodos(response.data))
-            .catch(err => console.log(err))
+            .then(response => {
+                setTodos(response.data)
+            })
 
     }, []);
 
@@ -25,7 +26,6 @@ export default function Home() {
                     setTodos([...todos, response.data]);
                     setTask('');
                 })
-                .catch(err => console.log(err));
         }
         else {
             alert("Task can't be empty!")
