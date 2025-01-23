@@ -27,7 +27,7 @@ app.use(cors(
 
 app.use(express.json());
 app.use(cookieParser());
-mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })//local//server
     .then(() => console.log("MongoDB connected successfully"))
     .catch(err => console.error("MongoDB connection error:", err));
 
@@ -35,35 +35,6 @@ app.get("/", (req, res) => {
     res.json("Hello, Welcome to your first MERN Stack project.");
 })
 
-app.get("/get", (req, res) => {
-    TodoModel.find()
-        .then(result => res.json(result))
-        .catch(err => res.json(err))
-})
-
-app.put("/update/:id", (req, res) => {
-    const { id } = req.params;
-    console.log(id)
-    TodoModel.findByIdAndUpdate({ _id: id }, { done: true })
-        .then(result => res.json(result))
-        .catch(err => res.json(err))
-
-})
-
-app.delete("/delete/:id", (req, res) => {
-    const { id } = req.params;
-    TodoModel.findByIdAndDelete({ _id: id })
-        .then(result => res.json(result))
-        .catch(err => res.json(err))
-})
-
-app.post('/add', (req, res) => {
-    const task = req.body.task;
-    TodoModel.create({
-        task: task
-    }).then(result => res.json(result))
-        .catch(err => console.log(err))
-})
 
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
@@ -107,11 +78,62 @@ app.post('/login', async (req, res) => {
 
 app.get('/profile', (req, res) => {
     const { token } = req.cookies;
-    jwt.verify(token, secret, {}, (err, info) => {
-        if (err) throw err;
-        res.json(info);
-    });
+    const payload = jwt.verify(token, secret);
+    User.findById(payload.id).then(
+        userInfo => {
+            res.json(userInfo);
+        }
+    )
+    // if (err) throw err;
+    // res.json(info);
+});
+
+app.post('/add', (req, res) => {
+    const payload = jwt.verify(req.cookies.token, secret);//////////////
+    const task = req.body.task;
+    // const todo= TodoModel.create({
+    //     task: task,
+    //     user: new mongoose.Types.ObjectId(payload.id)///////////
+    // });
+    const todo = new TodoModel({
+        task: task,
+        user: new mongoose.Types.ObjectId(payload.id),
+    })
+    todo.save().then(todo => { res.json(todo); })
+    // .then(result => res.json(result))
+    //     .catch(err => console.log(err))
 })
+
+app.get("/get", async (req, res) => {
+    try {
+        const payload = jwt.verify(req.cookies.token, secret)/////////
+        const todo = await TodoModel.find({ user: new mongoose.Types.ObjectId(payload.id) })///////
+        res.json(todo);
+    }
+    catch (err) {
+        console.error("JWT Verification Error:", err);
+        res.status(401).json({ message: "Unauthorized: Invalid or missing token" })
+    }
+})
+
+app.put("/update/:id", (req, res) => {
+    const { id } = req.params;
+    console.log(id)
+    TodoModel.findByIdAndUpdate({ _id: id }, { done: true })
+        .then(result => res.json(result))
+        .catch(err => res.json(err))
+
+})
+
+app.delete("/delete/:id", (req, res) => {
+    const { id } = req.params;
+    TodoModel.findByIdAndDelete({ _id: id })
+        .then(result => res.json(result))
+        .catch(err => res.json(err))
+})
+
+
+
 
 app.post('/logout', (req, res) => {
     res.cookie('token', '').json({ status: 'ok', message: 'Logged out successfully' });

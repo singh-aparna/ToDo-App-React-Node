@@ -2,25 +2,24 @@ import React, { useState } from 'react'
 import axios from 'axios';
 
 export default function Create() {
-    const [task, setTask] = useState("")
+    const [task, setTask] = useState("");
     const handleAdd = () => {
-        
         if (task.trim() !== "") {
-            // axios.post('http://localhost:3001/add', { task: task }) //Localhost
-                axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }) //Server
+            // axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
+            axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }) //Server
                 .then(result => console.log(result))
                 .catch(err => console.log(err))
-            setTask("") // Clear input after adding
+            setTask("");
         }
         else {
             alert("Task can't be empty!")
         }
     }
     return (
-        <div >
-            <input placeholder='Task name' type="text" value={task} onChange={(e) => {setTask(e.target.value) }} />
-            <button onClick={handleAdd}>Add Task</button>
-        </div>
+        <form onSubmit={handleAdd}>
+            <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
+            <button>Add Task</button>
+        </form>
     )
 }
 // http://localhost:3001/add

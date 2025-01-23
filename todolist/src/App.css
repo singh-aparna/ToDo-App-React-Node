@@ -1,9 +1,9 @@
-
 main {
   padding: 10px;
   max-width: 500px;
   margin: 0 auto;
 }
+
 /* a{cursor: pointer;} */
 
 
@@ -14,15 +14,13 @@ main h1 {
   color: #151a87;
 
 }
-main h2{
+
+main h2 {
   color: #151a87;
   text-align: center;
 }
-/* header{
-  margin-bottom: 50px;
-} */
 
-div.record{
+div.record {
   display: block;
   width: 100%;
   border: 2px solid #ddd;

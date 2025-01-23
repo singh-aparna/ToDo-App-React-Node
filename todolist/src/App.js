@@ -5,21 +5,19 @@ import RegisterPage from "./pages/RegisterPage";
 import { Routes, Route } from "react-router-dom";
 import LayoutPage from "./LayoutPage";
 import { UserContextProvider } from "./UserContext";
-//import WelcomePage from "./pages/WelcomePage";
-//import IndexPage from "./pages/IndexPage";
+import { useState } from "react";
 
 function App() {
+  const [username, password]=useState('');
   return (
     <div className="relative bg-[url('./Image/bgcover.jpg')] bg-cover bg-center h-screen">
-      <UserContextProvider>
+      <UserContextProvider value={{username, password}}>
         <Routes>
           <Route path="/" element={<LayoutPage />}>
-            <Route index element={<LoginPage />} />
+            <Route index element={<Home />} />
             <Route path={"/login"} element={<LoginPage />} />
             <Route path={"/register"} element={<RegisterPage />} />
-            <Route path={"/create"} element={<Home />} />
-            {/* <Route path={"/thanks"} element={<WelcomePage />} /> */}
-
+            {/* <Route path={"/create"} element={<Home />} /> */}
           </Route>
         </Routes>
       </UserContextProvider>

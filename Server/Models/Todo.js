@@ -5,7 +5,8 @@ const TodoSchema = new mongoose.Schema({
     done: {
         type: Boolean,
         default: false
-    }
+    },
+    user: {type: mongoose.SchemaTypes.ObjectId},
 })
 
 const TodoModel = mongoose.model("todos", TodoSchema)
