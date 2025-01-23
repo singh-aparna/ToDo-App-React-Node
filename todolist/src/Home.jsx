@@ -9,7 +9,7 @@ export default function Home() {
     const [todos, setTodos] = useState([]);
     const { userInfo } = useContext(UserContext);
     useEffect(() => {
-        axios.get("http://to-do-app-react-node.vercel.app/get")//server
+        axios.get("http://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
             // axios.get("http://localhost:3001/get", { withCredentials: true })//local
             .then(result => setTodos(result.data))
             .catch(err => console.log(err))
@@ -20,7 +20,7 @@ export default function Home() {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;
     }
     const handleEdit = (id) => {
-        axios.put("https://to-do-app-react-node.vercel.app/update/" + id)//server
+        axios.put("https://to-do-app-react-node.vercel.app/update/" + id, { withCredentials: true })//server
             // axios.put("http://localhost:3001/update/" + id, { withCredentials: true })//local
             .then(() => {
                 setTodos((prevTodos) =>
@@ -32,7 +32,7 @@ export default function Home() {
             .catch((err) => console.error(err));
     }
     const handleDelete = (id) => {
-        axios.delete("https://to-do-app-react-node.vercel.app/delete/" + id)//server
+        axios.delete("https://to-do-app-react-node.vercel.app/delete/" + id, { withCredentials: true })//server
             // axios.delete("http://localhost:3001/delete/" + id, { withCredentials: true })//local
             .then(() => {
                 setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));

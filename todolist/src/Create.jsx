@@ -7,7 +7,7 @@ export default function Create() {
         // e.preventDefault();
         if (task.trim() !== "") {
             // axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
-            axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }) //Server
+            axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }, { withCredentials: true }) //Server
                 .then(result => console.log(result))
                 .catch(err => console.log(err))
             setTask("");
