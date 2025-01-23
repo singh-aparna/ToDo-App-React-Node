@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export default function Create() {
     const [task, setTask] = useState("");
-    const handleAdd = (e) => {
-        e.preventDefault();
+    const handleAdd = () => {
+        // e.preventDefault();
         if (task.trim() !== "") {
             // axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
             axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }) //Server
@@ -17,10 +17,10 @@ export default function Create() {
         }
     }
     return (
-        <form onSubmit={handleAdd}>
+        <div>
             <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
-            <button>Add Task</button>
-        </form>
+            <button onClick={handleAdd}>Add Task</button>
+        </div>
     )
 }
 // http://localhost:3001/add
