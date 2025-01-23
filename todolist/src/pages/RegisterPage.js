@@ -13,8 +13,8 @@ export default function RegisterPage() {
         const response = await fetch('https://to-do-app-react-node.vercel.app/register', {//server
             method: 'POST',
             body: JSON.stringify({ username, password }),
-            headers: { 'Content-Type': 'application/json' }
-
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
         })
         if (response.ok) {
             alert('Registration successful');
