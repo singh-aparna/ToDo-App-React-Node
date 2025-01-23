@@ -9,6 +9,7 @@ export default function Header() {
     useEffect(() => {
         //fetch('http://localhost:3001/profile', {//local
          fetch('https://to-do-app-react-node.vercel.app/profile', {//server
+            method: 'GET',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
         }).then(response => {
