@@ -10,6 +10,7 @@ export default function Header() {
         //fetch('http://localhost:3001/profile', {//local
          fetch('https://to-do-app-react-node.vercel.app/profile', {//server
             credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
         }).then(response => {
             response.json().then(userInfo => {
                 setUserInfo(userInfo);
@@ -21,6 +22,7 @@ export default function Header() {
          fetch('http://to-do-app-react-node.vercel.app/logout', {//server
             credentials: 'include',
             method: "POST",
+            headers: { 'Content-Type': 'application/json' },
         })
             // setUserInfo(null);
             // setRedirect(true); 
