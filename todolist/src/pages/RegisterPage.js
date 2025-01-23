@@ -17,14 +17,21 @@ export default function RegisterPage() {
             body: JSON.stringify({ username, password }),
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-        }).then((userInfo) => {
+        })
+        if (response.ok) {
+            const userInfo = await response.json(); // Parse the JSON data
             setUserInfo(userInfo);
             setRedirect(true);
-        })
-        if (response) {
             alert('Registration successful');
         }
         else { alert('Registration failed'); }
+        // .then((userInfo) => {
+        //     setUserInfo(userInfo);
+        //     setRedirect(true);
+        // })
+        // if (response) {
+        //     alert('Registration successful');
+        //else { alert('Registration failed'); }
         //     if (response.ok) {
         //         const userInfo = await response.json(); // Parse the JSON data
         //         setUserInfo(userInfo);
@@ -36,10 +43,9 @@ export default function RegisterPage() {
         // catch (err) {
         //     console.error('Error during registration:', err);
         //     alert('Registration failed: Network error or server unavailable');
-        // }
     }
     if (redirect) {
-        return <Navigate to={'/'} />
+        return <Navigate to={'/login'} />
     }
     return (
         <form onSubmit={register} className="register">
