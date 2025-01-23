@@ -11,6 +11,7 @@ const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
 const secret = 'agdfjhd778hj';
 const cookieParser = require('cookie-parser');
+const PORT = process.env.PORT || 3001;
 
 const mongodbLocal = process.env.mongodbLocalURL
 const mongodb = process.env.mongodbURL;
@@ -139,7 +140,7 @@ app.post('/logout', (req, res) => {
     res.cookie('token', '').json({ status: 'ok', message: 'Logged out successfully' });
 })
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log("Server is listening on localhost addressss.");
 })
 

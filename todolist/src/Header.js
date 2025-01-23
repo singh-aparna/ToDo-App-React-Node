@@ -7,8 +7,8 @@ export default function Header() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:3001/profile', {//local
-        // fetch('https://to-do-app-react-node.vercel.app/profile', {//server
+        //fetch('http://localhost:3001/profile', {//local
+         fetch('https://to-do-app-react-node.vercel.app/profile', {//server
             credentials: 'include',
         }).then(response => {
             response.json().then(userInfo => {
@@ -17,8 +17,8 @@ export default function Header() {
         })
     }, [])
     function logout() {
-        fetch('http://localhost:3001/logout', {//local
-        // fetch('http://to-do-app-react-node.vercel.app/logout', {//server
+        //fetch('http://localhost:3001/logout', {//local
+         fetch('http://to-do-app-react-node.vercel.app/logout', {//server
             credentials: 'include',
             method: "POST",
         })
