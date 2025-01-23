@@ -13,14 +13,14 @@ const secret = 'agdfjhd778hj';
 const cookieParser = require('cookie-parser');
 
 const mongodbLocal = process.env.mongodbLocalURL
-mongodb = process.env.mongodbURL;
+const mongodb = process.env.mongodbURL;
 
 const cors = require("cors");
 app.use(cors(
     {
-        origin: ["https://to-do-app-react-node-uclf.vercel.app"],//server
+         origin: ["https://to-do-app-react-node-uclf.vercel"],//server
         methods: ["POST", "GET", "PUT", "DELETE"],
-        // origin: 'http://localhost:3000',//local
+        //origin: 'http://localhost:3000',//local
         credentials: true
     }//Server
 ))

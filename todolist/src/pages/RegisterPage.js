@@ -7,26 +7,32 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
     const { setUserInfo } = useContext(UserContext);
+
     async function register(e) {
         e.preventDefault();
-        // const response = await fetch('http://localhost:3001/register', {//local
-        const response = await fetch('https://to-do-app-react-node.vercel.app/register', {//server
-            method: 'POST',
-            body: JSON.stringify({ username, password }),
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        })
-        if (response.ok) {
-            alert('Registration successful');
-            setTimeout((userInfo) => {
+        try {
+           // const response = await fetch('http://localhost:3001/register', {//local
+                const response = await fetch('https://to-do-app-react-node.vercel.app/register', {//server
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            })
+            if (response.ok) {
+                const userInfo = await response.json(); // Parse the JSON data
                 setUserInfo(userInfo);
-                setRedirect(true);  // Redirect after 1 second
-            }, 500);
+                setRedirect(true);
+                alert('Registration successful');
+            }
+            else { alert('Registration failed'); }
         }
-        else { alert('Registration failed') }
+        catch (err) {
+            console.error('Error during registration:', err);
+            alert('Registration failed: Network error or server unavailable');
+        }
     }
     if (redirect) {
-        return <Navigate to={'/'} />
+        return <Navigate to={'/login'} />
     }
     return (
         <form onSubmit={register} className="register">

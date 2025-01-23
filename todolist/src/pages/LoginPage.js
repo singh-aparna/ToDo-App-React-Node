@@ -10,8 +10,8 @@ export default function LoginPage() {
     const { setUserInfo } = useContext(UserContext);
     async function login(e) {
         e.preventDefault();
-        // const response = await fetch('http://localhost:3001/login', {//local
-        const response = await fetch('https://to-do-app-react-node.vercel.app/login', {//server
+       // const response = await fetch('http://localhost:3001/login', {//local
+            const response = await fetch('https://to-do-app-react-node.vercel.app/login', {//server
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: { 'Content-Type': 'application/json' },
@@ -22,7 +22,6 @@ export default function LoginPage() {
                 setUserInfo(userInfo);
                 setRedirect(true);
             });
-
         }
         else {
             alert('Wrong credentials');
