@@ -10,7 +10,7 @@ export default function Home() {
     const [todos, setTodos] = useState([]);
     const { userInfo } = useContext(UserContext);
     useEffect(() => {
-        axios.get("http://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
+        axios.get("https://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
             // axios.get("http://localhost:3001/get", { withCredentials: true })//local
             .then(response => {
                 setTodos(response.data)
