@@ -6,32 +6,52 @@ export default function Header() {
     const { setUserInfo, userInfo } = useContext(UserContext);
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     //fetch('http://localhost:3001/profile', {//local
+    //     fetch('https://to-do-app-react-node.vercel.app/profile', {//server
+    //         method: 'GET',
+    //         credentials: 'include',
+    //         headers: { 'Content-Type': 'application/json' },
+    //     }).then(response => {
+    //         response.json().then(userInfo => {
+    //             setUserInfo(userInfo);
+    //         })
+    //     })
+    // }, [])
+
     useEffect(() => {
         //fetch('http://localhost:3001/profile', {//local
-         fetch('https://to-do-app-react-node.vercel.app/profile', {//server
+        fetch('https://to-do-app-react-node.vercel.app/profile', {//server
             method: 'GET',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-        }).then(response => {
-            response.json().then(userInfo => {
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    setUserInfo(null); // Clear user info if unauthorized
+                    throw new Error('Failed to fetch user info');
+                }
+            })
+            .then(userInfo => {
                 setUserInfo(userInfo);
             })
-        })
-    }, [])
+            .catch(error => {
+                console.error('Error fetching profile:', error);
+            });
+    }, [setUserInfo]);
+
     function logout() {
         //fetch('http://localhost:3001/logout', {//local
-         fetch('https://to-do-app-react-node.vercel.app/logout', {//server
+        fetch('https://to-do-app-react-node.vercel.app/logout', {//server
             credentials: 'include',
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
+        }).then(() => {
+            setUserInfo(null); // Clear user info
+            navigate("/"); // Redirect to home page after logout
         })
-            // setUserInfo(null);
-            // setRedirect(true); 
-
-            .then(() => {
-                setUserInfo(null); // Clear user info
-                navigate("/"); // Redirect to home page after logout
-            })
             .catch(error => {
                 console.error("Logout error:", error);
             });
