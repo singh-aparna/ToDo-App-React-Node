@@ -3,8 +3,9 @@ import axios from 'axios';
 
 export default function Create() {
     const [task, setTask] = useState("");
-    const handleAdd = () => {
+    const handleAdd = (e) => {
         if (task.trim() !== "") {
+            e.preventDefault();
             // axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
             axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }) //Server
                 .then(result => console.log(result))
