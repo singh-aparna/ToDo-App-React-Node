@@ -3,23 +3,22 @@ import axios from 'axios';
 import { FaTrash } from "react-icons/fa6";
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri";
 import { UserContext } from './UserContext';
-
+//axios.get("http://localhost:3001/get", { withCredentials: true })//local
 export default function Home() {
     const [task, setTask] = useState("");
     const [todos, setTodos] = useState([]);
     const { userInfo } = useContext(UserContext);
     useEffect(() => {
-         axios.get("https://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
-        //axios.get("http://localhost:3001/get", { withCredentials: true })//local
+        axios.get("https://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
             .then(response => {
                 setTodos(response.data)
             })
     }, []);
-
+    //axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
     const handleAdd = () => {
         if (task.trim() !== "") {
-            //axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
-                axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }, { withCredentials: true }) //Server
+
+            axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }, { withCredentials: true }) //Server
                 .then(response => {
                     setTodos([...todos, response.data]);
                     setTask('');
@@ -47,7 +46,7 @@ export default function Home() {
     }
     const handleDelete = (id) => {
         axios.delete("https://to-do-app-react-node.vercel.app/delete/" + id, { withCredentials: true })//server
-        //axios.delete("http://localhost:3001/delete/" + id, { withCredentials: true })//local
+            //axios.delete("http://localhost:3001/delete/" + id, { withCredentials: true })//local
             .then(() => {
                 setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
             })
