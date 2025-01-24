@@ -13,7 +13,7 @@ export default function Home() {
 
    
     useEffect(() => {
-        axios.get("https://to-do-app-react-node.vercel.app/get", { withCredentials: true })
+        axios.get("https://to-do-app-react-node.vercel.app/todos", { withCredentials: true })
             .then(response => {
                 setTodos(response.data)
                 console.log(response.data)

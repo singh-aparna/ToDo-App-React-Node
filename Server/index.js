@@ -113,7 +113,7 @@ app.post('/add', (req, res) => {
     todo.save().then(todo => { res.json(todo); })
 })
 
-    app.get("/get", async (req, res) => {
+    app.get("/todos", async (req, res) => {
     //try {
     const payload = jwt.verify(req.cookies.token, secret)/////////
     const todo = await TodoModel.find({ user: payload.id })///////
