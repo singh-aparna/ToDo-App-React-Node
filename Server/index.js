@@ -113,18 +113,34 @@ app.post('/add', (req, res) => {
     todo.save().then(todo => { res.json(todo); })
 })
 
-    app.get("/todos", async (req, res) => {
-    //try {
-    const payload = jwt.verify(req.cookies.token, secret)/////////
-    const todo = await TodoModel.find({ user: payload.id })///////
-    res.json(todo);
+//     app.get("/todos", async (req, res) => {
+   
+//     const payload = jwt.verify(req.cookies.token, secret)/////////
+//     const todo = await TodoModel.find({ user: payload.id })///////
+//     res.json(todo);
+// }
+// )
+
+app.get("/todos", cors({
+    origin: "https://to-do-app-react-node-uclf.vercel.app",
+    credentials: true,
+  }), async (req, res) => {
+    try {
+      const payload = jwt.verify(req.cookies.token, secret);
+      const todos = await TodoModel.find({ user: payload.id });
+      res.json(todos);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    }
+  });
+  
+ //try {
     //}
     //catch (err) {
     //console.error(err);
     //res.status(500).json({ error: "Something went wrong" });
-    }
-    )
-
+    
 // app.get('/get', (req, res) => {
 //     const payload = jwt.verify(req.cookies.token, secret);
 //     TodoModel.where({ user: new mongoose.Types.ObjectId(payload.id) })
