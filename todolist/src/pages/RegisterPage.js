@@ -1,30 +1,47 @@
 import { useContext, useState } from "react"
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../UserContext";
+
+import axios from "axios";
+import UserContext from "../UserContext";
+
 
 export default function RegisterPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
-    const { setUserInfo } = useContext(UserContext);
-    // const response = await fetch('http://localhost:3001/register', {//local
+    const user = useContext(UserContext);
+
+    //axios.post('http://localhost:3001/register', data, { withCredentials: true }
     async function register(e) {
         e.preventDefault();
-        // try {
+        const data = { username, password };
+        axios.post('https://to-do-app-react-node.vercel.app/register', data, { withCredentials: true }
+        )
+            .then(response => {
+                user.setUsername(response.data.username);
+                setUsername('');
+                setPassword('');
+                setRedirect(true);
+                console.log(response.data.username)
+            })
 
-        const response = await fetch('https://to-do-app-react-node.vercel.app/register', {//server
-            method: 'POST',
-            body: JSON.stringify({ username, password }),
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        })
-        if (response.ok) {
-            const userInfo = await response.json(); // Parse the JSON data
-            setUserInfo(userInfo);
-            setRedirect(true);
-            alert('Registration successful');
-        }
-        else { alert('Registration failed'); }
+        // async function register(e) {
+        //     e.preventDefault();
+        //     // try {
+
+        //     const response = await fetch('https://to-do-app-react-node.vercel.app/register', {//server
+        //         method: 'POST',
+        //         body: JSON.stringify({ username, password }),
+        //         headers: { 'Content-Type': 'application/json' },
+        //         credentials: 'include',
+        //     })
+        //     if (response.ok) {
+        //         const userInfo = await response.json(); // Parse the JSON data
+        //         setUserInfo(userInfo);
+        //         setRedirect(true);
+        //         alert('Registration successful');
+        //     }
+        //     else { alert('Registration failed'); }
         // .then((userInfo) => {
         //     setUserInfo(userInfo);
         //     setRedirect(true);

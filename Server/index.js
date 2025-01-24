@@ -15,22 +15,18 @@ const PORT = process.env.PORT || 3001;
 
 const mongodbLocal = process.env.mongodbLocalURL
 const mongodb = process.env.mongodbURL;
-const allowedOrigins = [
-    'http://localhost:3000', // Local frontend
-    'https://to-do-app-react-node-uclf.vercel.app', // Production frontend
-];
 
-
+//origin: 'http://localhost:3000',//local
 const cors = require("cors");
 app.use(cors(
     {
         origin: 'https://to-do-app-react-node-uclf.vercel.app',//server
         methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
         credentials: true,
-        allowedHeaders: ['Content-Type', 'Authorization'],              
+        allowedHeaders: ['Content-Type', 'Authorization'],
     }//Server
 ))
-//origin: 'http://localhost:3000',//local
+
 app.options('*', cors());// Handle preflight requests
 app.use(express.json());
 app.use(cookieParser());
@@ -83,16 +79,18 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.get('/profile', (req, res) => {
-    const { token } = req.cookies;
-    const payload = jwt.verify(token, secret);
-    User.findById(payload.id).then(
-        userInfo => {
-            res.json(userInfo);
-        }
-    )
-    // if (err) throw err;
-    // res.json(info);
+app.get('/user', (req, res) => {
+    if (!req.cookies.token) {
+        return res.json({});
+    }
+    const payload = jwt.verify(req.cookies.token, secret);
+    User.findById(payload.id)
+        .then(userInfo => {
+            if (!userInfo) {
+                return res.json({});
+            }
+            res.json({ id: userInfo._id, username: userInfo.username });
+        });
 });
 
 app.post('/add', (req, res) => {
@@ -118,7 +116,7 @@ app.get("/get", async (req, res) => {
         res.json(todo);
     }
     catch (err) {
-        console.error(error);
+        console.error(err);
         res.status(500).json({ error: "Something went wrong" });
     }
 })
@@ -139,11 +137,8 @@ app.delete("/delete/:id", (req, res) => {
         .catch(err => res.json(err))
 })
 
-
-
-
 app.post('/logout', (req, res) => {
-    res.cookie('token', '').json({ status: 'ok', message: 'Logged out successfully' });
+    res.cookie('token', '').send();
 })
 
 app.listen(PORT, () => {
