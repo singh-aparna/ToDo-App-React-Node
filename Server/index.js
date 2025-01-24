@@ -30,6 +30,16 @@ app.use(cors(
 app.options('*', cors());// Handle preflight requests
 app.use(express.json());
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://to-do-app-react-node-uclf.vercel.app"); // Replace with your frontend URL
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true"); // Include credentials
+    next();
+  });
+  
+
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })//local//server
     .then(() => console.log("MongoDB connected successfully"))
     .catch(err => console.error("MongoDB connection error:", err));
