@@ -37,8 +37,8 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.header("Access-Control-Allow-Credentials", "true"); // Include credentials
     next();
-  });
-  
+});
+
 
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })//local//server
     .then(() => console.log("MongoDB connected successfully"))
@@ -114,7 +114,7 @@ app.post('/add', (req, res) => {
 })
 
 //     app.get("/todos", async (req, res) => {
-   
+
 //     const payload = jwt.verify(req.cookies.token, secret)/////////
 //     const todo = await TodoModel.find({ user: payload.id })///////
 //     res.json(todo);
@@ -124,23 +124,25 @@ app.post('/add', (req, res) => {
 app.get("/todos", cors({
     origin: "https://to-do-app-react-node-uclf.vercel.app",
     credentials: true,
-  }), async (req, res) => {
+}), async (req, res) => {
     try {
-      const payload = jwt.verify(req.cookies.token, secret);
-      const todo = await Todo.where({ user: new mongoose.Types.ObjectId(payload.id) });
-      res.json(todo);
+        const payload = jwt.verify(req.cookies.token, secret);
+        await Todo.where({ user: new mongoose.Types.ObjectId(payload.id) }).find((err, todos => {
+            res.json(todos);
+        }))
+
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Something went wrong" });
+        console.error(err);
+        res.status(500).json({ error: "Something went wrong" });
     }
-  });
-  
- //try {
-    //}
-    //catch (err) {
-    //console.error(err);
-    //res.status(500).json({ error: "Something went wrong" });
-    
+});
+
+//try {
+//}
+//catch (err) {
+//console.error(err);
+//res.status(500).json({ error: "Something went wrong" });
+
 // app.get('/get', (req, res) => {
 //     const payload = jwt.verify(req.cookies.token, secret);
 //     TodoModel.where({ user: new mongoose.Types.ObjectId(payload.id) })
