@@ -11,16 +11,16 @@ export default function Home() {
     const [todos, setTodos] = useState([]);
     const userInfo = useContext(UserContext);
 
-    //axios.get("http://localhost:3001/get", { withCredentials: true })
+   
     useEffect(() => {
-        axios.get("https://to-do-app-react-node.vercel.app/get", { withCredentials: true })//server
+        axios.get("https://to-do-app-react-node.vercel.app/get", { withCredentials: true })
             .then(response => {
                 setTodos(response.data)
                 console.log(response.data)
             })
 
     }, []);
-
+ //axios.get("http://localhost:3001/get", { withCredentials: true })
     if (!userInfo.username) {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;
     }
