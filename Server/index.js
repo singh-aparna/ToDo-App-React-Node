@@ -103,25 +103,25 @@ app.post('/add', (req, res) => {
     todo.save().then(todo => { res.json(todo); })
 })
 
-//app.get("/get", async (req, res) => {
-//try {
-//const payload = jwt.verify(req.cookies.token, secret)/////////
-//const todo = await TodoModel.find({ user: payload.id })///////
-//res.json(todo);
-//}
-//catch (err) {
-//console.error(err);
-//res.status(500).json({ error: "Something went wrong" });
-//}
-//})
+app.get("/get", async (req, res) => {
+try {
+const payload = jwt.verify(req.cookies.token, secret)/////////
+const todo = await TodoModel.find({ user: payload.id })///////
+res.json(todo);
+}
+catch (err) {
+console.error(err);
+res.status(500).json({ error: "Something went wrong" });
+}
+})
 
-app.get('/get', (req, res) => {
-    const payload = jwt.verify(req.cookies.token, secret);
-    TodoModel.where({ user: new mongoose.Types.ObjectId(payload.id) })
-        .find((err, todos) => {
-            res.json(todos);
-        })
-});
+// app.get('/get', (req, res) => {
+//     const payload = jwt.verify(req.cookies.token, secret);
+//     TodoModel.where({ user: new mongoose.Types.ObjectId(payload.id) })
+//         .find((err, todos) => {
+//             res.json(todos);
+//         })
+// });
 
 
 app.put("/update/:id", (req, res) => {

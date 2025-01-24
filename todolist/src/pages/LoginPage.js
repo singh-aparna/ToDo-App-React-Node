@@ -41,7 +41,7 @@ export default function LoginPage() {
                 setPassword('');
                 setLoginError(false);
                 setRedirect(true);
-                console.log(response.data.username)
+                //console.log(response.data.username)
             })
             .catch(() => { setLoginError(true) })
     }
