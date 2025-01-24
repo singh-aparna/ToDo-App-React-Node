@@ -124,10 +124,10 @@ app.post('/add', (req, res) => {
 app.get("/todos", cors({
     origin: "https://to-do-app-react-node-uclf.vercel.app",
     credentials: true,
-}), async (req, res) => {
+}),  (req, res) => {
     try {
         const payload = jwt.verify(req.cookies.token, secret);
-        await Todo.where({ user: new mongoose.Types.ObjectId(payload.id) }).find((err, todos => {
+        Todo.where({ user: new mongoose.Types.ObjectId(payload.id) }).find((err, todos => {
             res.json(todos);
         }))
 
