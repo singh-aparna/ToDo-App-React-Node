@@ -19,7 +19,7 @@ export default function Home() {
                 console.log(response.data)
             })
 
-    }, [userInfo.username]);
+    }, []);
  //axios.get("http://localhost:3001/get", { withCredentials: true })
     if (!userInfo.username) {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;

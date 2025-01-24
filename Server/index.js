@@ -3,7 +3,7 @@ const app = express();
 
 const mongoose = require("mongoose")
 
-const TodoModel = require('./Models/Todo')
+const Todo = require('./Models/Todo')
 const User = require('./Models/User');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
@@ -105,7 +105,7 @@ app.get('/user', (req, res) => {
 
 app.post('/add', (req, res) => {
     const payload = jwt.verify(req.cookies.token, secret);//////////////
-    const todo = new TodoModel({
+    const todo = new Todo({
         task: req.body.task,
         done: false,
         user: new mongoose.Types.ObjectId(payload.id),
@@ -127,8 +127,8 @@ app.get("/todos", cors({
   }), async (req, res) => {
     try {
       const payload = jwt.verify(req.cookies.token, secret);
-      const todos = await TodoModel.find({ user: payload.id });
-      res.json(todos);
+      const todo = await Todo.where({ user: new mongoose.Types.ObjectId(payload.id) });
+      res.json(todo);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Something went wrong" });
@@ -153,7 +153,7 @@ app.get("/todos", cors({
 app.put("/update/:id", (req, res) => {
     const { id } = req.params;
     console.log(id)
-    TodoModel.findByIdAndUpdate({ _id: id }, { done: true })
+    Todo.findByIdAndUpdate({ _id: id }, { done: true })
         .then(result => res.json(result))
         .catch(err => res.json(err))
 
@@ -161,7 +161,7 @@ app.put("/update/:id", (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
     const { id } = req.params;
-    TodoModel.findByIdAndDelete({ _id: id })
+    Todo.findByIdAndDelete({ _id: id })
         .then(result => res.json(result))
         .catch(err => res.json(err))
 })
