@@ -17,7 +17,7 @@ function App() {
   //axios.get('http://localhost:3001/user', { withCredentials: true })
   useEffect(() => {
     axios.get('https://to-do-app-react-node.vercel.app/user', { withCredentials: true })
-      .then((response) => { setUsername(response.data.username || null) })
+      .then((response) => { setUsername(response.data.username) })
       // Update username if logged in
       .catch(() => {
         setUsername(null); // Handle any errors
