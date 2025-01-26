@@ -103,19 +103,19 @@ app.put("/todos", (req, res) => {
     })
 })
 
-app.get('/todos', async (req, res) => {
-    try {
-        const token = req.cookies.token;
-        if (!token) {
-            return res.json({});
-        }
-        const payload = jwt.verify(token, secret); // Verify JWT token
-        const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }); // Query with await
-        res.json(todos); // Send the response
-    } catch (err) {
-        console.error(err); // Log the error for debugging
-        res.status(500).json({ error: 'Something went wrong' }); // Send error response
+app.get('/todos', (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.json({});
     }
+    const payload = jwt.verify(token, secret); // Verify JWT token
+    Todo.find({ user: new mongoose.Types.ObjectId(payload.id) })
+        .then(todo => { res.json(todo) })
+    //res.json(todos); // Send the response
+    // } catch (err) {
+    //     console.error(err); // Log the error for debugging
+    //     res.status(500).json({ error: 'Something went wrong' }); // Send error response
+    //}
 });
 
 app.put("/update/:id", (req, res) => {
