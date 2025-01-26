@@ -28,7 +28,7 @@ export default function Home() {
             axios.post('https://to-do-app-react-node.vercel.app/todos', { task }, { withCredentials: true }) //Server
                 .then(response => {
                     console.log("Response Data:", response.data);
-                    setTodos([...todos, response.data]);
+                    setTodos([...todos, response]);
                     setTask('');
                 })
         //}
