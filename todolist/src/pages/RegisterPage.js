@@ -11,8 +11,8 @@ export default function RegisterPage() {
 
     function register(e) {
         e.preventDefault();
-        const data = { username, password };
-        axios.post('https://to-do-app-react-node.vercel.app/register', data, { withCredentials: true }
+        //const data = { username, password };
+        axios.post('https://to-do-app-react-node.vercel.app/register', { username, password }, { withCredentials: true }
         )
             .then(response => {
                 user.setUsername(response.data.username);
@@ -34,41 +34,3 @@ export default function RegisterPage() {
         </form>
     )
 }
-//http://localhost:3001
-//https://to-do-app-react-node.vercel.app
-
-// async function register(e) {
-//     e.preventDefault();
-//     // try {
-
-//     const response = await fetch('https://to-do-app-react-node.vercel.app/register', {//server
-//         method: 'POST',
-//         body: JSON.stringify({ username, password }),
-//         headers: { 'Content-Type': 'application/json' },
-//         credentials: 'include',
-//     })
-//     if (response.ok) {
-//         const userInfo = await response.json(); // Parse the JSON data
-//         setUserInfo(userInfo);
-//         setRedirect(true);
-//         alert('Registration successful');
-//     }
-//     else { alert('Registration failed'); }
-// .then((userInfo) => {
-//     setUserInfo(userInfo);
-//     setRedirect(true);
-// })
-// if (response) {
-//     alert('Registration successful');
-//else { alert('Registration failed'); }
-//     if (response.ok) {
-//         const userInfo = await response.json(); // Parse the JSON data
-//         setUserInfo(userInfo);
-//         setRedirect(true);
-//         alert('Registration successful');
-//     }
-//     else { alert('Registration failed'); }
-// }
-// catch (err) {
-//     console.error('Error during registration:', err);
-//     alert('Registration failed: Network error or server unavailable');
