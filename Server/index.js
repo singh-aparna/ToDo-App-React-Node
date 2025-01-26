@@ -61,13 +61,11 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-
     User.findOne({ username }).then((userInfo) => {
         if (!userInfo) {
             // User not found
             return res.status(401).json({ error: 'Invalid username or password' });
         }
-
         const passOk = bcrypt.compareSync(password, userInfo.password);
         if (passOk) {
             jwt.sign({ id: userInfo._id, username }, secret, (err, token) => {
