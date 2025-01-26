@@ -85,7 +85,7 @@ app.post('/login', (req, res) => {
 
 app.get('/user', (req, res) => {
     const token = req.cookies.token;
-    if (!req.cookies.token) {
+    if (!token) {
         return res.json({});
     }
     const payload = jwt.verify(token, secret);
