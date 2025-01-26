@@ -15,8 +15,8 @@ export default function Home() {
     useEffect(() => {
         axios.get("https://to-do-app-react-node.vercel.app/todos", { withCredentials: true })
             .then(response => {
-                setTodos(response.data);
-                console.log(response.data);
+                setTodos(response);
+                console.log(response);
             })
     }, []);
     if (!userInfo.username) {
@@ -28,7 +28,7 @@ export default function Home() {
             axios.post('https://to-do-app-react-node.vercel.app/todos', { task }, { withCredentials: true }) //Server
                 .then(response => {
                     console.log("Response Data:", response.data);
-                    setTodos([...todos, response]);
+                    setTodos([...todos, response.data]);
                     setTask('');
                 })
         //}
