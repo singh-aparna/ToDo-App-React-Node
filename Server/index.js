@@ -69,7 +69,7 @@ app.post('/login', (req, res) => {
         }
         const passOk = bcrypt.compareSync(password, userInfo.password);
         if (passOk) {
-          jwt.sign({id:userInfo._id,username},secret, (err,token) => {
+          jwt.sign({id:userInfo._id,username}, secret, (err,token) => {
             if (err) {
               console.log(err);
               res.sendStatus(500);
@@ -111,11 +111,11 @@ app.put("/todos", (req, res) => {
 
 app.get('/todos', async (req, res) => {
     try {
-        //const token = req.cookies.token;
-        // If no token is provided, respond with an appropriate error
-        //if (!token) {
-            //return res.status(401).json({ error: 'Unauthorized: No token provided' });
-        //}
+        const token = req.cookies.token;
+        //If no token is provided, respond with an appropriate error
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
+        }
         const payload = jwt.verify(req.cookies.token, secret); // Verify JWT token
         const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }); // Query with await
         res.json(todos); // Send the response
