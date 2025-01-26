@@ -60,31 +60,27 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    User.findOne({ username }).then((userInfo) => {
+    const {username,password} = req.body;
+    User.findOne({username})
+      .then(userInfo => {
         if (!userInfo) {
-            // User not found
-            return res.status(401).json({ error: 'Invalid username or password' });
+          return res.sendStatus(401);
         }
         const passOk = bcrypt.compareSync(password, userInfo.password);
         if (passOk) {
-            jwt.sign({ id: userInfo._id, username }, secret, (err, token) => {
-                if (err) {
-                    console.error(err);
-                    return res.sendStatus(500); // Internal Server Error
-                }
-                res.cookie('token', token).json({ id: userInfo._id, username });
-            });
+          jwt.sign({id:userInfo._id,username},secret, (err,token) => {
+            if (err) {
+              console.log(err);
+              res.sendStatus(500);
+            } else {
+              res.cookie('token', token).json({id:userInfo._id,username:userInfo.username});
+            }
+          });
         } else {
-            // Password is incorrect
-            res.status(401).json({ error: 'Invalid username or password' });
+          res.sendStatus(401);
         }
-    }).catch((err) => {
-        console.error(err); // Log the error for debugging
-        res.sendStatus(500); // Internal Server Error
-    });
-});
-
+      })
+  });
 
 app.get('/user', (req, res) => {
     if (!req.cookies.token) {
