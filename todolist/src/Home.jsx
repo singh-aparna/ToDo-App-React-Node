@@ -18,15 +18,15 @@ export default function Home() {
                 setTodos(response.data);
                 console.log(response.data);
             })
-            .catch((error) => {
-                if (error.response && error.response.status === 401) {
-                    console.error("Unauthorized: Redirecting to login.");
-                    // Handle unauthorized error (e.g., redirect to login)
-                    window.location.href = "/login";
-                } else {
-                    console.error("An error occurred:", error);
-                }
-            });
+            // .catch((error) => {
+            //     if (error.response && error.response.status === 401) {
+            //         console.error("Unauthorized: Redirecting to login.");
+            //         // Handle unauthorized error (e.g., redirect to login)
+            //         window.location.href = "/login";
+            //     } else {
+            //         console.error("An error occurred:", error);
+            //     }
+            // });
     }, []);
     if (!userInfo.username) {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;
