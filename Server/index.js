@@ -96,16 +96,6 @@ app.get('/user', (req, res) => {
         });
 });
 
-app.post('/add', (req, res) => {
-    const payload = jwt.verify(req.cookies.token, secret);//////////////
-    const todo = new Todo({
-        task: req.body.task,
-        done: false,
-        user: new mongoose.Types.ObjectId(payload.id),
-    })
-    todo.save().then(todo => { res.json(todo); })
-})
-
 app.put("/todos", (req, res) => {
     const payload = jwt.verify(req.cookies.token, secret);
     const todo = new Todo({
@@ -120,11 +110,11 @@ app.put("/todos", (req, res) => {
 
 app.get('/todos', async (req, res) => {
     try {
-        const token = req.cookies.token;
+        //const token = req.cookies.token;
         // If no token is provided, respond with an appropriate error
-        if (!token) {
-            return res.status(401).json({ error: 'Unauthorized: No token provided' });
-        }
+        //if (!token) {
+            //return res.status(401).json({ error: 'Unauthorized: No token provided' });
+        //}
         const payload = jwt.verify(req.cookies.token, secret); // Verify JWT token
         const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }); // Query with await
         res.json(todos); // Send the response
