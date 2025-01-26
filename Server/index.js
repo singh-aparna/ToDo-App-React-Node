@@ -116,7 +116,7 @@ app.get('/todos', async (req, res) => {
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }
-        const payload = jwt.verify(req.cookies.token, secret); // Verify JWT token
+        const payload = jwt.verify(token, secret); // Verify JWT token
         const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }); // Query with await
         res.json(todos); // Send the response
     } catch (err) {
