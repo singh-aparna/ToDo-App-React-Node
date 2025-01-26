@@ -1,44 +1,37 @@
 const express = require("express");
-const app = express();
-
-const mongoose = require("mongoose")
-
-const Todo = require('./Models/Todo')
-const User = require('./Models/User');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const mongoose = require("mongoose");
 require('dotenv').config();
+
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json({ extended: true }));
+
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
 const secret = 'agdfjhd778hj';
-const cookieParser = require('cookie-parser');
-const PORT = process.env.PORT || 3001;
 
+const Todo = require('./Models/Todo');
+const User = require('./Models/User');
+
+const PORT = process.env.PORT || 3001;
 const mongodbLocal = process.env.mongodbLocalURL
 const mongodb = process.env.mongodbURL;
 
 //origin: 'http://localhost:3000',//local
+//origin: 'https://to-do-app-react-node-uclf.vercel.app'//server
 const cors = require("cors");
 app.use(cors(
     {
-        origin: 'https://to-do-app-react-node-uclf.vercel.app',//server
+        origin: 'https://to-do-app-react-node-uclf.vercel.app',
         methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization'],
     }//Server
 ))
-
-app.options('*', cors());// Handle preflight requests
-app.use(express.json());
-app.use(cookieParser());
-
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://to-do-app-react-node-uclf.vercel.app"); // Replace with your frontend URL
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Credentials", "true"); // Include credentials
-    next();
-});
-
 
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })//local//server
     .then(() => console.log("MongoDB connected successfully"))
@@ -48,46 +41,52 @@ app.get("/", (req, res) => {
     res.json("Hello, Welcome to your first MERN Stack project.");
 })
 
-
-app.post('/register', async (req, res) => {
+app.post('/register', (req, res) => {
     const { username, password } = req.body;
-    try {
-        const userDoc = await User.create({
-            username,
-            password: bcrypt.hashSync(password, salt),
-        });
-        res.json(userDoc);
-    }
-    catch (e) {
-        res.status(400).json(e);
-    }
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    const user = new User({ password: hashedPassword, username });
+    user.save().then(userInfo => {
+        jwt.sign({ id: userInfo._id, username: userInfo.username }, secret, {}, (err, token) => {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            }
+            else {
+                res.cookie('token', token).json({ id: userInfo._id, username });
+            }
+        })
+    });
+    res.send('');
 })
 
-app.post('/login', async (req, res) => {
+app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    const userDoc = await User.findOne({ username });
-    if (!userDoc) {
-        return res.status(404).json({ message: "User not found" });
-    }
-    // res.json(userDoc);
-    const passOk = bcrypt.compareSync(password, userDoc.password);
-    if (!passOk) {
-        return res.status(401).json({ message: "Invalid credentials" });
-    }
-    if (passOk) {
-        //loggedin
-        jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
-            if (err) throw err;
-            res.cookie('token', token).json({
-                id: userDoc._id,
-                username,
+
+    User.findOne({ username }).then((userInfo) => {
+        if (!userInfo) {
+            // User not found
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+
+        const passOk = bcrypt.compareSync(password, userInfo.password);
+        if (passOk) {
+            jwt.sign({ id: userInfo._id, username }, secret, (err, token) => {
+                if (err) {
+                    console.error(err);
+                    return res.sendStatus(500); // Internal Server Error
+                }
+                res.cookie('token', token).json({ id: userInfo._id, username });
             });
-        });
-    }
-    else {
-        res.status(400).json('Wrong credentials');
-    }
-})
+        } else {
+            // Password is incorrect
+            res.status(401).json({ error: 'Invalid username or password' });
+        }
+    }).catch((err) => {
+        console.error(err); // Log the error for debugging
+        res.sendStatus(500); // Internal Server Error
+    });
+});
+
 
 app.get('/user', (req, res) => {
     if (!req.cookies.token) {
@@ -113,44 +112,33 @@ app.post('/add', (req, res) => {
     todo.save().then(todo => { res.json(todo); })
 })
 
-//     app.get("/todos", async (req, res) => {
+app.put("/todos", (req, res) => {
+    const payload = jwt.verify(req.cookies.token, secret);
+    const todo = new Todo({
+        task: req.body.task,
+        done: false,
+        user: new mongoose.Types.ObjectId(payload.id),
+    });
+    todo.save().then(todo => {
+        res.json(todo);
+    })
+})
 
-//     const payload = jwt.verify(req.cookies.token, secret)/////////
-//     const todo = await TodoModel.find({ user: payload.id })///////
-//     res.json(todo);
-// }
-// )
-
-app.get("/todos", cors({
-    origin: "https://to-do-app-react-node-uclf.vercel.app",
-    credentials: true,
-}),  (req, res) => {
+app.get('/todos', async (req, res) => {
     try {
-        const payload = jwt.verify(req.cookies.token, secret);
-        Todo.where({ user: new mongoose.Types.ObjectId(payload.id) }).find((err, todos => {
-            res.json(todos);
-        }))
-
+        const token = req.cookies.token;
+        // If no token is provided, respond with an appropriate error
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
+        }
+        const payload = jwt.verify(req.cookies.token, secret); // Verify JWT token
+        const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }); // Query with await
+        res.json(todos); // Send the response
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Something went wrong" });
+        console.error(err); // Log the error for debugging
+        res.status(500).json({ error: 'Something went wrong' }); // Send error response
     }
 });
-
-//try {
-//}
-//catch (err) {
-//console.error(err);
-//res.status(500).json({ error: "Something went wrong" });
-
-// app.get('/get', (req, res) => {
-//     const payload = jwt.verify(req.cookies.token, secret);
-//     TodoModel.where({ user: new mongoose.Types.ObjectId(payload.id) })
-//         .find((err, todos) => {
-//             res.json(todos);
-//         })
-// });
-
 
 app.put("/update/:id", (req, res) => {
     const { id } = req.params;
@@ -175,6 +163,7 @@ app.post('/logout', (req, res) => {
 app.listen(PORT, () => {
     console.log("Server is listening on localhost addressss.");
 })
+
 
 
 

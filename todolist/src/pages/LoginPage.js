@@ -10,26 +10,7 @@ export default function LoginPage() {
     const [redirect, setRedirect] = useState(false);
     const [loginerror, setLoginError] = useState(false);
     const user = useContext(UserContext);
-    // async function login(e) {
-    //     e.preventDefault();
-    //    // const response = await fetch('http://localhost:3001/login', {//local
-    //         const response = await fetch('https://to-do-app-react-node.vercel.app/login', {//server
-    //         method: 'POST',
-    //         body: JSON.stringify({ username, password }),
-    //         headers: { 'Content-Type': 'application/json' },
-    //         credentials: 'include',
-    //     });
-    //     if (response.ok) {
-    //         response.json().then(userInfo => {
-    //             setUserInfo(userInfo);
-    //             setRedirect(true);
-    //         });
-    //     }
-    //     else {
-    //         alert('Wrong credentials');
-    //     }
-    // }
-    //axios.post('http://localhost:3001/login', data, { withCredentials: true }
+
     async function login(e) {
         e.preventDefault();
         const data = { username, password };
@@ -49,7 +30,7 @@ export default function LoginPage() {
         return <Navigate to={"/"} />
     }
     return (
-        <form onSubmit={login} className="login">
+        <form action="" onSubmit={(e) => login(e)} className="login">
             <h1>Login</h1>
             {loginerror && (
                 <div>Login error! Wrong username or password!</div>
@@ -60,3 +41,24 @@ export default function LoginPage() {
         </form>
     )
 }
+
+// async function login(e) {
+//     e.preventDefault();
+//    // const response = await fetch('http://localhost:3001/login', {//local
+//         const response = await fetch('https://to-do-app-react-node.vercel.app/login', {//server
+//         method: 'POST',
+//         body: JSON.stringify({ username, password }),
+//         headers: { 'Content-Type': 'application/json' },
+//         credentials: 'include',
+//     });
+//     if (response.ok) {
+//         response.json().then(userInfo => {
+//             setUserInfo(userInfo);
+//             setRedirect(true);
+//         });
+//     }
+//     else {
+//         alert('Wrong credentials');
+//     }
+// }
+//axios.post('http://localhost:3001/login', data, { withCredentials: true }

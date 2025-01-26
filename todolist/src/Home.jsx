@@ -5,30 +5,36 @@ import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri"
 import UserContext from './UserContext';
 
 //axios.get("http://localhost:3001/get", { withCredentials: true })//local
+//axios.get("https://to-do-app-react-node.vercel.app/todos",  { withCredentials: true })
 export default function Home() {
 
     const [task, setTask] = useState("");
     const [todos, setTodos] = useState([]);
     const userInfo = useContext(UserContext);
 
-   
     useEffect(() => {
-        axios.get("https://to-do-app-react-node.vercel.app/todos",  { withCredentials: true })
+        axios.get("https://to-do-app-react-node.vercel.app/todos", { withCredentials: true })
             .then(response => {
-                setTodos(response.data)
-                console.log(response.data)
+                setTodos(response.data);
+                console.log(response.data);
             })
-
+            .catch((error) => {
+                if (error.response && error.response.status === 401) {
+                    console.error("Unauthorized: Redirecting to login.");
+                    // Handle unauthorized error (e.g., redirect to login)
+                    window.location.href = "/login";
+                } else {
+                    console.error("An error occurred:", error);
+                }
+            });
     }, []);
- //axios.get("http://localhost:3001/get", { withCredentials: true })
     if (!userInfo.username) {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;
     }
-
-    //axios.post('http://localhost:3001/add', { task: task }, { withCredentials: true }) //Localhost
-    const handleAdd = () => {
+    const handleAdd = (e) => {
+        e.preventDefault();
         if (task.trim() !== "") {
-            axios.post('https://to-do-app-react-node.vercel.app/add', { task: task }, { withCredentials: true }) //Server
+            axios.put('https://to-do-app-react-node.vercel.app/todos', { task: task }, { withCredentials: true }) //Server
                 .then(response => {
                     setTodos([...todos, response.data]);
                     setTask('');
@@ -40,8 +46,7 @@ export default function Home() {
     }
 
     const handleEdit = (id) => {
-        //axios.put("https://to-do-app-react-node.vercel.app/update/" + id, { withCredentials: true })//server
-        axios.put("https://localhost:3001/update/" + id, { withCredentials: true })//local
+        axios.put("https://to-do-app-react-node.vercel.app/update/" + id, { withCredentials: true })//local
             .then(() => {
                 setTodos((prevTodos) =>
                     prevTodos.map((todo) =>
@@ -52,24 +57,19 @@ export default function Home() {
             .catch((err) => console.error(err));
     }
     const handleDelete = (id) => {
-        //axios.delete("https://to-do-app-react-node.vercel.app/delete/" + id, { withCredentials: true })//server
-        axios.delete("http://localhost:3001/delete/" + id, { withCredentials: true })//local
+        axios.delete("https://to-do-app-react-node.vercel.app/delete/" + id, { withCredentials: true })//local
             .then(() => {
                 setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
             })
             .catch((err) => console.error(err));
     }
     return (
-        // <div className='flex flex-col gap-y-4 border rounded-xl h-full items-center bg-[#e5e5e5] px-5 py-28  absolute inset-0 bg-white/0 backdrop-blur-xs'>
-        <main>
+        <div>
             <h1>My Tasks</h1>
-            {/* <Create /> */}
-
             <div>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
                 <button onClick={handleAdd}>Add Task</button>
             </div>
-
             <div className='record'>
                 {
                     todos.length === 0 ?
@@ -85,6 +85,6 @@ export default function Home() {
                                 <div onClick={() => handleDelete(todo._id)}><FaTrash /></div>
                             </div>
                         ))}</div>
-        </main>
+        </div>
     )
 }
