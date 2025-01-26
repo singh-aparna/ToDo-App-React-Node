@@ -12,7 +12,7 @@ app.use(bodyParser.json({ extended: true }));
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
-const secret = 'agdfjhd778hj';
+
 
 const Todo = require('./Models/Todo');
 const User = require('./Models/User');
@@ -20,6 +20,7 @@ const User = require('./Models/User');
 const PORT = process.env.PORT || 3001;
 const mongodbLocal = process.env.mongodbLocalURL
 const mongodb = process.env.mongodbURL;
+const secret = process.env.secret;
 
 //origin: 'http://localhost:3000',//local
 //origin: 'https://to-do-app-react-node-uclf.vercel.app'//server
