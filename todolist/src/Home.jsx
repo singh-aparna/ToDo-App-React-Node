@@ -27,6 +27,7 @@ export default function Home() {
         //if (task.trim() !== "") {
             axios.post('https://to-do-app-react-node.vercel.app/todos', { task }, { withCredentials: true }) //Server
                 .then(response => {
+                    console.log("Response Data:", response.data);
                     setTodos([...todos, response.data]);
                     setTask('');
                 })
@@ -65,7 +66,7 @@ export default function Home() {
                 {
                     todos.length === 0 ?
                         <h2>No Record</h2> :
-                        Array.isArray(todos) &&
+                        //Array.isArray(todos) &&
                         todos.map(todo => (
                             <div className='text-[#151a87] p-1  flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
