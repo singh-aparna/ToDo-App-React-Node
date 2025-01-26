@@ -24,16 +24,16 @@ export default function Home() {
     }
     const handleAdd = (e) => {
         e.preventDefault();
-        if (task.trim() !== "") {
+        //if (task.trim() !== "") {
             axios.put('https://to-do-app-react-node.vercel.app/todos', { task: task }, { withCredentials: true }) //Server
                 .then(response => {
                     setTodos([...todos, response.data]);
                     setTask('');
                 })
-        }
-        else {
-            alert("Task can't be empty!")
-        }
+        //}
+        //else {
+            //alert("Task can't be empty!")
+        //}
     }
 
     const handleEdit = (id) => {
