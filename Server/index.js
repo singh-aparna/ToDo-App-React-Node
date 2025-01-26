@@ -84,10 +84,11 @@ app.post('/login', (req, res) => {
   });
 
 app.get('/user', (req, res) => {
+    const token = req.cookies.token;
     if (!req.cookies.token) {
         return res.json({});
     }
-    const payload = jwt.verify(req.cookies.token, secret);
+    const payload = jwt.verify(token, secret);
     User.findById(payload.id)
         .then(userInfo => {
             if (!userInfo) {
