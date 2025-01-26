@@ -9,5 +9,5 @@ const TodoSchema = new mongoose.Schema({
     user: {type: mongoose.SchemaTypes.ObjectId},
 })
 
-const Todo = mongoose.model("todos", TodoSchema);
+const Todo = mongoose.model("Todo", TodoSchema);
 module.exports = Todo;
