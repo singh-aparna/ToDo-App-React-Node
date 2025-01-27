@@ -25,15 +25,15 @@ export default function Home() {
     const handleAdd = (e) => {
         e.preventDefault();
         //if (task.trim() !== "") {
-            axios.post('https://to-do-app-react-node.vercel.app/todos', { task }, { withCredentials: true }) //Server
-                .then(response => {
-                    console.log("Response Data:", response.data);
-                    setTodos(prevTodos => [...prevTodos, response.data]);
-                    setTask('');
-                })
+        axios.post('https://to-do-app-react-node.vercel.app/todos', { task }, { withCredentials: true }) //Server
+            .then(response => {
+                console.log("Response Data:", response.data);
+                setTodos(prevTodos => [...prevTodos, response.data]);
+                setTask('');
+            })
         //}
         //else {
-            //alert("Task can't be empty!")
+        //alert("Task can't be empty!")
         //}
     }
 
@@ -64,11 +64,11 @@ export default function Home() {
             </div>
             <div className='record'>
                 {
-                    todos.length === 0 ?
-                        <h2>No Record</h2> :
-                        Array.isArray(todos) &&
+                    //todos.length === 0 ?
+                    //<h2>No Record</h2> :
+                    Array.isArray(todos) && todos.length > 0 ?
                         todos.map(todo => (
-                            <div className='text-[#151a87] p-1  flex items-center justify-between gap-x-7'>
+                            <div key={todo._id} className='text-[#151a87] p-1  flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
                                     {todo.done ? <RiCheckboxCircleFill /> : <RiCheckboxBlankCircleLine />}
 
@@ -76,7 +76,11 @@ export default function Home() {
                                 </div>
                                 <div onClick={() => handleDelete(todo._id)}><FaTrash /></div>
                             </div>
-                        ))}</div>
+                        ))
+                        :
+                        <h2>No Record</h2>
+                }
+            </div>
         </div>
     )
 }
