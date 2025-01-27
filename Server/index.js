@@ -103,6 +103,9 @@ app.post("/todos", (req, res) => {
 })
 
 app.get('/todos', async (req, res) => {
+    if (!req.cookies.token) {
+        res.send({});
+    }
     try {
         const payload = jwt.verify(req.cookies.token, secret); // Verify the JWT token
         const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }).lean(); // Convert to plain objects
