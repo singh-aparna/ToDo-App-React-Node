@@ -8,8 +8,8 @@ import UserContext from './UserContext';
 //axios.get("https://to-do-app-react-node.vercel.app/todos",  { withCredentials: true })
 export default function Home() {
 
-    const [task, setTask] = useState("Sample Task");
-    const [todos, setTodos] = useState([]);
+    const [task, setTask] = useState("");
+    const [todos, setTodos] = useState(["Sample Task", "Hi"]);
     const userInfo = useContext(UserContext);
 
     useEffect(() => {
