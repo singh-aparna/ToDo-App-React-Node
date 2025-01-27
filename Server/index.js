@@ -89,34 +89,30 @@ app.get('/user', (req, res) => {
 
 app.post("/todos", (req, res) => {
     const token = req.cookies.token;
-    // if (!token) {
-    //     return res.json({});
-    // }
+    if (!token) {
+        return res.json({});
+    }
     const payload = jwt.verify(token, secret);
     const todos = new Todo({
         task: req.body.task,
-        // done: false,
-        // user: new mongoose.Types.ObjectId(payload.id),
+        done: false,
+        user: new mongoose.Types.ObjectId(payload.id),
     });
     todos.save().then(todo => {
         res.json(todo);
     })
 })
 
-app.get('/todos', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.json({});
+app.get('/todos', async (req, res) => {
+    try {
+      const payload = jwt.verify(req.cookies.token, secret); // Verify the JWT token
+      const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }).lean(); // Convert to plain objects
+      res.json(todos); // Send the todos as a JSON response
+    } catch (err) {
+      console.error(err); // Log errors for debugging
+      res.status(500).json({ error: 'Something went wrong' }); // Send error response
     }
-    const payload = jwt.verify(token, secret); // Verify JWT token
-    Todo.find({ user: new mongoose.Types.ObjectId(payload.id) })
-        .then(todo => { res.json(todo) })
-    //res.json(todos); // Send the response
-    // } catch (err) {
-    //     console.error(err); // Log the error for debugging
-    //     res.status(500).json({ error: 'Something went wrong' }); // Send error response
-    //}
-});
+  });
 
 app.put("/update/:id", (req, res) => {
     const { id } = req.params;
