@@ -56,12 +56,12 @@ export default function Home() {
             .catch((err) => console.error(err));
     }
     return (
+        <div>
         <form action="" onSubmit={handleAdd}>
             <h1>My Tasks</h1>
-            <div>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
                 <button>Add Task</button>
-            </div>
+            </form>
             <div className='record'>
                 {
                     todos.length === 0 ?
@@ -82,6 +82,7 @@ export default function Home() {
                     //     <h2>No Record</h2>
                 }
             </div>
-        </form>
+      
+        </div>
     )
 }
