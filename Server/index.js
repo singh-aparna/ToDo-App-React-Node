@@ -89,9 +89,9 @@ app.get('/user', (req, res) => {
 
 app.post("/todos", (req, res) => {
     const token = req.cookies.token;
-    if (!token) {
-        return res.json({});
-    }
+    // if (!token) {
+    //     return res.json({});
+    // }
     const payload = jwt.verify(token, secret);
     const todo = new Todo({
         task: req.body.task,
