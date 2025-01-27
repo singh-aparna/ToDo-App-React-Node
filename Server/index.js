@@ -95,8 +95,8 @@ app.post("/todos", (req, res) => {
     const payload = jwt.verify(token, secret);
     const todos = new Todo({
         task: req.body.task,
-        done: false,
-        user: new mongoose.Types.ObjectId(payload.id),
+        // done: false,
+        // user: new mongoose.Types.ObjectId(payload.id),
     });
     todos.save().then(todo => {
         res.json(todo);
