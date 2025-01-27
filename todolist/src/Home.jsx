@@ -9,7 +9,7 @@ import UserContext from './UserContext';
 export default function Home() {
 
     const [task, setTask] = useState("");
-    const [todos, setTodos] = useState(["Sample Task", "Hi"]);
+    const [todos, setTodos] = useState([]);
     const userInfo = useContext(UserContext);
 
     useEffect(() => {
@@ -27,8 +27,8 @@ export default function Home() {
         //if (task.trim() !== "") {
         axios.post('https://to-do-app-react-node.vercel.app/todos', { task }, { withCredentials: true }) //Server
             .then(response => {
+               setTodos([...todos, response]);
                 console.log("Response Data:", response.data);
-                setTodos(prevTodos => [...prevTodos, response.data]);
                 setTask('');
             })
         //}
