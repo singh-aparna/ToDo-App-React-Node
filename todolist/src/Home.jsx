@@ -56,11 +56,11 @@ export default function Home() {
             .catch((err) => console.error(err));
     }
     return (
-        <div>
+        <form action="" onSubmit={handleAdd}>
             <h1>My Tasks</h1>
             <div>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
-                <button onClick={handleAdd}>Add Task</button>
+                <button>Add Task</button>
             </div>
             <div className='record'>
                 {
@@ -81,6 +81,6 @@ export default function Home() {
                         <h2>No Record</h2>
                 }
             </div>
-        </div>
+        </form>
     )
 }
