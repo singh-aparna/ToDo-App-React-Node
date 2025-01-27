@@ -104,7 +104,7 @@ app.post("/todos", (req, res) => {
 
 app.get('/todos', async (req, res) => {
     
-    try {
+
         if (!req.cookies.token) {
             res.send({});
         }
@@ -112,10 +112,10 @@ app.get('/todos', async (req, res) => {
         const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }).lean(); // Convert to plain objects
         res.json(todos);;
         // Send the todos as a JSON response
-    } catch (err) {
-        console.error(err); // Log errors for debugging
-        res.status(500).json({ error: 'Something went wrong' }); // Send error response
-    }
+    // } catch (err) {
+    //     console.error(err); // Log errors for debugging
+    //     res.status(500).json({ error: 'Something went wrong' }); // Send error response
+    // }
 });
 
 app.put("/update/:id", (req, res) => {
