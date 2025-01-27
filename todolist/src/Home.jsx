@@ -64,9 +64,10 @@ export default function Home() {
             </div>
             <div className='record'>
                 {
-                    //todos.length === 0 ?
-                    //<h2>No Record</h2> :
-                    Array.isArray(todos) && todos.length > 0 ? (
+                    todos.length === 0 ?
+                    <h2>No Record</h2> :
+                    // Array.isArray(todos) && todos.length > 0 ? 
+                    (
                         todos.map(todo => (
                             <div key={todo._id} className='text-[#151a87] p-1  flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
@@ -77,8 +78,8 @@ export default function Home() {
                                 <div onClick={() => handleDelete(todo._id)}><FaTrash /></div>
                             </div>
                         ))
-                    ):
-                        <h2>No Record</h2>
+                     )
+                    //     <h2>No Record</h2>
                 }
             </div>
         </form>
