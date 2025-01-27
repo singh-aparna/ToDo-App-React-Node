@@ -73,7 +73,7 @@ export default function Home() {
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
                                     {todo.done ? <RiCheckboxCircleFill /> : <RiCheckboxBlankCircleLine />}
 
-                                    <div className={todo.done ? "line-through" : ""}>{todo}</div>
+                                    <div className={todo.done ? "line-through" : ""}>{todo.task}</div>
                                 </div>
                                 <div onClick={() => handleDelete(todo._id)}><FaTrash /></div>
                             </div>
