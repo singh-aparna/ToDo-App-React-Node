@@ -24,17 +24,17 @@ export default function Home() {
     }
     const handleAdd = (e) => {
         e.preventDefault();
-        //if (task.trim() !== "") {
+        if (task.trim() !== "") {
         axios.post('https://to-do-app-react-node.vercel.app/todos', { task: task }, { withCredentials: true }) //Server
             .then(response => {
                setTodos([...todos, response]);
                 console.log("Response Data:", response.data);
                 setTask('');
             })
-        //}
-        //else {
-        //alert("Task can't be empty!")
-        //}
+        }
+        else {
+        alert("Task can't be empty!")
+        }
     }
 
     const handleEdit = (id) => {
@@ -67,7 +67,7 @@ export default function Home() {
                     todos.length === 0 ?
                     <h2>No Record</h2> :
                     // Array.isArray(todos) && todos.length > 0 ? 
-                    (
+                    
                         todos.map(todo => (
                             <div key={todo._id} className='text-[#151a87] p-1  flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
@@ -78,7 +78,7 @@ export default function Home() {
                                 <div onClick={() => handleDelete(todo._id)}><FaTrash /></div>
                             </div>
                         ))
-                     )
+                     
                     //     <h2>No Record</h2>
                 }
             </div>
