@@ -68,13 +68,19 @@ export default function Home() {
     }
     return (
         <div>
-            <form action="" onSubmit={(e)=>handleAdd(e)}>
+            <form action="" onSubmit={(e) => handleAdd(e)}>
                 <h1>My Tasks</h1>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
                 <button>Add Task</button>
             </form>
             {
-                Array.isArray(todos).map(todo => (<li>{todo.task}</li>))
+                todos.length > 0 ? (
+                    Array.isArray(todos) && todos.map((todo) => (
+                        <li key={todo._id}>{todo.task}</li>
+                    ))
+                ) : (
+                    <p>No tasks available</p>
+                )
             }
             {/* <div className='record'>
                 {
