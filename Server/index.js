@@ -103,7 +103,7 @@ app.get('/todos', async (req, res) => {
 });
 
 app.post('/todos', async (req, res) => {
-    // try {
+    try {
     // Verify the JWT token and extract the payload
     const payload = jwt.verify(req.cookies.token, secret);
 
@@ -116,10 +116,10 @@ app.post('/todos', async (req, res) => {
 
     // Send the created Todo as the response
     res.json(todo);
-    // } catch (err) {
-    //     console.error(err); // Log the error for debugging
-    //     res.status(500).json({ error: "Failed to create a new todo" }); // Send an error response
-    // }
+    } catch (err) {
+        console.error(err); // Log the error for debugging
+        res.status(500).json({ error: "Failed to create a new todo" }); // Send an error response
+    }
 });
 
 
