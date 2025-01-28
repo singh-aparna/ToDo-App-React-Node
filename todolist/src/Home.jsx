@@ -74,7 +74,7 @@ export default function Home() {
                 <button>Add Task</button>
             </form>
             {
-                todos.map(todo => (<li>{todo.task}</li>))
+                Array.isArray(todos).map(todo => (<li>{todo.task}</li>))
             }
             {/* <div className='record'>
                 {
