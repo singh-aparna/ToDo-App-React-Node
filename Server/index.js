@@ -89,33 +89,33 @@ app.get('/user', (req, res) => {
 
 app.get('/todos', async (req, res) => {
     const payload = jwt.verify(req.cookies.token, secret); // Verify the JWT token
-      const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }).lean(); // Convert to plain objects
-      res.json(todos);;
-      // Send the todos as a JSON response
-      // } catch (err) {
-      //     console.error(err); // Log errors for debugging
-      //     res.status(500).json({ error: 'Something went wrong' }); // Send error response
-      // }
-  });
+    const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }).lean(); // Convert to plain objects
+    res.json(todos);;
+    // Send the todos as a JSON response
+    // } catch (err) {
+    //     console.error(err); // Log errors for debugging
+    //     res.status(500).json({ error: 'Something went wrong' }); // Send error response
+    // }
+});
 
 app.post("/todos", async (req, res) => {
-    try {
-        // Verify the JWT token and extract the payload
-        const payload = jwt.verify(req.cookies.token, secret);
+    // try {
+    // Verify the JWT token and extract the payload
+    const payload = jwt.verify(req.cookies.token, secret);
 
-        // Create and save the new Todo
-        const todo = await Todo.create({
-            task: req.body.task,
-            done: false,
-            user: new mongoose.Types.ObjectId(payload.id),
-        });
+    // Create and save the new Todo
+    const todo = await Todo.create({
+        task: req.body.task,
+        done: false,
+        user: new mongoose.Types.ObjectId(payload.id),
+    });
 
-        // Send the created Todo as the response
-        res.json(todo);
-    } catch (err) {
-        console.error(err); // Log the error for debugging
-        res.status(500).json({ error: "Failed to create a new todo" }); // Send an error response
-    }
+    // Send the created Todo as the response
+    res.json(todo);
+    // } catch (err) {
+    //     console.error(err); // Log the error for debugging
+    //     res.status(500).json({ error: "Failed to create a new todo" }); // Send an error response
+    // }
 });
 
 
