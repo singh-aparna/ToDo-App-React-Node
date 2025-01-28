@@ -68,7 +68,7 @@ export default function Home() {
     }
     return (
         <div>
-            <form action="" onSubmit={handleAdd}>
+            <form action="" onSubmit={(e)=>handleAdd(e)}>
                 <h1>My Tasks</h1>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
                 <button>Add Task</button>
