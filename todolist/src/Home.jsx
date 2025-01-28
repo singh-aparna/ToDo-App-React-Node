@@ -22,19 +22,16 @@ export default function Home() {
     if (!userInfo.username) {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;
     }
+
     const handleAdd = (e) => {
         e.preventDefault();
-        if (task.trim() !== "") {
-        axios.post('https://to-do-app-react-node.vercel.app/todos', { task: task }, { withCredentials: true }) //Server
-            .then(response => {
-               setTodos([...todos, response]);
-                console.log("Response Data:", response.data);
-                setTask('');
-            })
-        }
-        else {
-        alert("Task can't be empty!")
-        }
+        fetch('https://to-do-app-react-node.vercel.app/todos', {
+            body: JSON.stringify({ task }),
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => response.json())// Parse the response to JSON
+            .then(data => setTodos([...todos, data]))// Add the new todo to the list
+            .catch(err => console.log(err))
     }
 
     const handleEdit = (id) => {
@@ -57,17 +54,17 @@ export default function Home() {
     }
     return (
         <div>
-        <form action="" onSubmit={handleAdd}>
-            <h1>My Tasks</h1>
+            <form action="" onSubmit={handleAdd}>
+                <h1>My Tasks</h1>
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
                 <button>Add Task</button>
             </form>
             <div className='record'>
                 {
                     todos.length === 0 ?
-                    <h2>No Record</h2> :
-                    // Array.isArray(todos) && todos.length > 0 ? 
-                    
+                        <h2>No Record</h2> :
+                        // Array.isArray(todos) && todos.length > 0 ? 
+
                         todos.map(todo => (
                             <div key={todo._id} className='text-[#151a87] p-1  flex items-center justify-between gap-x-7'>
                                 <div className='flex items-center justify-center gap-2' onClick={() => handleEdit(todo._id)}>
@@ -78,11 +75,29 @@ export default function Home() {
                                 <div onClick={() => handleDelete(todo._id)}><FaTrash /></div>
                             </div>
                         ))
-                     
+
                     //     <h2>No Record</h2>
                 }
             </div>
-      
+
         </div>
     )
 }
+// Your code has an issue when using fetch. The body needs to be a JSON string, and response.data
+// is not automatically available with fetch as it is with axios.
+// You need to parse the response with .json(). Here's the corrected code:
+
+// const handleAdd = (e) => {
+//     e.preventDefault();
+//     if (task.trim() !== "") {
+//     axios.post('https://to-do-app-react-node.vercel.app/todos', { task: task }, { withCredentials: true }) //Server
+//         .then(response => {
+//            setTodos([...todos, response]);
+//             console.log("Response Data:", response.data);
+//             setTask('');
+//         })
+//     }
+//     else {
+//     alert("Task can't be empty!")
+//     }
+// }
