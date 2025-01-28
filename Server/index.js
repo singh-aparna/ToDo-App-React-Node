@@ -88,17 +88,25 @@ app.get('/user', (req, res) => {
 });
 
 app.post("/todos", async (req, res) => {
-    const payload = jwt.verify(req.cookies.token, secret);
-    const todos = await Todo.create({
-        task: req.body.task,
-        done: false,
-        user: new mongoose.Types.ObjectId(payload.id),
-    });
-    res.json(todos);
+    try {
+        // Verify the JWT token and extract the payload
+        const payload = jwt.verify(req.cookies.token, secret);
 
-    //todos.save().then(todo => {       
-    //})
-})
+        // Create and save the new Todo
+        const todo = await Todo.create({
+            task: req.body.task,
+            done: false,
+            user: new mongoose.Types.ObjectId(payload.id),
+        });
+
+        // Send the created Todo as the response
+        res.json(todo);
+    } catch (err) {
+        console.error(err); // Log the error for debugging
+        res.status(500).json({ error: "Failed to create a new todo" }); // Send an error response
+    }
+});
+
 
 app.get('/todos', async (req, res) => {
 
