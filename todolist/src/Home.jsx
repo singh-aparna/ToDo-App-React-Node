@@ -13,19 +13,21 @@ export default function Home() {
     const userInfo = useContext(UserContext);
 
     useEffect(() => {
-        axios.get("https://to-do-app-react-node.vercel.app/todos", { withCredentials: true })
-            .then(response => {
-                setTodos(response.data);
-                console.log(response.data);
+        fetch('https://to-do-app-react-node.vercel.app/todos', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                setTodos(data)
+                    .catch(err => console.log(err))
             })
-    }, []);
+    }, [])
+
     if (!userInfo.username) {
         return <p className='text-center p-16 text-2xl font-semibold text-green-800'>You need to be logged in to see this page</p>;
     }
 
     const handleAdd = (e) => {
         e.preventDefault();
-        fetch('https://to-do-app-react-node.vercel.app/todos', {
+        fetch('https://to-do-app-react-node.vercel.app/todos', { credentials: 'include' }, {
             body: JSON.stringify({ task }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
@@ -60,7 +62,7 @@ export default function Home() {
                 <button>Add Task</button>
             </form>
             {
-                todos.map(todo=>(<li>{todo.task}</li>))
+                todos.map(todo => (<li>{todo.task}</li>))
             }
             {/* <div className='record'>
                 {
@@ -104,3 +106,12 @@ export default function Home() {
 //     alert("Task can't be empty!")
 //     }
 // }
+
+// useEffect(() => {
+//     axios.get("https://to-do-app-react-node.vercel.app/todos", { withCredentials: true })
+//         .then(response => {
+//             setTodos(response.data);
+//             console.log(response.data);
+//         })
+// }, []);
+
