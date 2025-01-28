@@ -59,7 +59,10 @@ export default function Home() {
                 <input placeholder='Task name' type="text" value={task} onChange={(e) => { setTask(e.target.value) }} />
                 <button>Add Task</button>
             </form>
-            <div className='record'>
+            {
+                todos.map(todo=>(<li>{todo.task}</li>))
+            }
+            {/* <div className='record'>
                 {
                     todos.length === 0 ?
                         <h2>No Record</h2> :
@@ -78,7 +81,7 @@ export default function Home() {
 
                     //     <h2>No Record</h2>
                 }
-            </div>
+            </div> */}
 
         </div>
     )
