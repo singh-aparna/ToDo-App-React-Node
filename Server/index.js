@@ -87,20 +87,21 @@ app.get('/user', (req, res) => {
         });
 });
 
-app.post("/todos", (req, res) => {
+app.post("/todos", async (req, res) => {
     const payload = jwt.verify(req.cookies.token, secret);
-    const todos = new Todo({
+    const todos = await Todo.create({
         task: req.body.task,
         done: false,
         user: new mongoose.Types.ObjectId(payload.id),
     });
-    todos.save().then(todo => {
-        res.json(todo);
-    })
+    res.json(todos);
+
+    //todos.save().then(todo => {       
+    //})
 })
 
 app.get('/todos', async (req, res) => {
-    
+
     const payload = jwt.verify(req.cookies.token, secret); // Verify the JWT token
     const todos = await Todo.find({ user: new mongoose.Types.ObjectId(payload.id) }).lean(); // Convert to plain objects
     res.json(todos);;
