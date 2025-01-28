@@ -98,7 +98,7 @@ app.get('/todos', async (req, res) => {
     // }
 });
 
-app.post("/todos", async (req, res) => {
+app.post('/todos', async (req, res) => {
     // try {
     // Verify the JWT token and extract the payload
     const payload = jwt.verify(req.cookies.token, secret);
