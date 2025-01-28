@@ -23,6 +23,7 @@ export default function Home() {
                 return response.json(); // Parse the response as JSON
             })
             .then((data) => {
+                if (!Array.isArray(data)) throw new Error("Invalid data format");
                 setTodos(data); // Update the state with the fetched todos
                 console.log(data); // Log the data for debugging
             })
@@ -76,7 +77,7 @@ export default function Home() {
             {
                 todos.length > 0 ? (
                     Array.isArray(todos) && todos.map((todo) => (
-                        <li key={todo._id}>{todo.task}</li>
+                        <li>{todo.task}</li>
                     ))
                 ) : (
                     <p>No tasks available</p>
