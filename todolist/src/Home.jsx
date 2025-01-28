@@ -38,7 +38,8 @@ export default function Home() {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        fetch('https://to-do-app-react-node.vercel.app/todos', { credentials: 'include' }, {
+        fetch('https://to-do-app-react-node.vercel.app/todos', {
+            credentials: 'include',
             body: JSON.stringify({ task }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
