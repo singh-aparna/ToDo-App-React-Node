@@ -16,14 +16,9 @@ export default function Home() {
         fetch("https://to-do-app-react-node.vercel.app/todos", {
             credentials: "include", // Sends cookies along with the request
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch todos");
-                }
-                return response.json(); // Parse the response as JSON
-            })
+            .then((response) => { response.json() }) // Parse the response as JSON
+
             .then((data) => {
-                if (!Array.isArray(data)) throw new Error("Invalid data format");
                 setTodos(data); // Update the state with the fetched todos
                 console.log(data); // Log the data for debugging
             })
