@@ -28,19 +28,11 @@ const cors = require("cors");
 app.use(cors(
     {
         origin: 'https://to-do-app-react-node-uclf.vercel.app',
-        methods: ["POST", "GET", "PUT", "DELETE"],
+        methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization'],
     }//Server
 ))
-
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://to-do-app-react-node-uclf.vercel.app"); // Allow requests from any origin
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
-  });
 
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })//local//server
     .then(() => console.log("MongoDB connected successfully"))
@@ -152,4 +144,10 @@ app.listen(PORT, () => {
 
 
 
-
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "https://to-do-app-react-node-uclf.vercel.app"); // Allow requests from any origin
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//     res.header("Access-Control-Allow-Credentials", "true");
+//     next();
+//   });
