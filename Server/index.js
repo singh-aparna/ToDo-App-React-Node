@@ -30,7 +30,7 @@ app.use(cors(
         origin: 'https://to-do-app-react-node-uclf.vercel.app',
         methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
         credentials: true,
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        allowedHeaders: ['Content-Type', 'Authorization'],//
     }//Server
 ))
 
